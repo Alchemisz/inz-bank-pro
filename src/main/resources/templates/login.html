@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #submit {
+            width: 120px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <input id="login" type="text"/>
+    <input id="pass" type="text"/>
+    <button id="submit">zaloguj</button>
+    <script>
+        var login = document.getElementById("login");
+        var pass = document.getElementById("pass");
+        var submit = document.getElementById("submit");
+
+        submit.addEventListener('click', () => {
+               const xhttp = new XMLHttpRequest();
+
+               xhttp.onload = function() {
+                    console.log(this.responseText);
+                    if(this.responseText == "true") {
+                        window.location = "/client/home";
+                    }
+               }
+               xhttp.open("POST", "/auth/login", true);
+               xhttp.setRequestHeader("Authentication", login.value + ":" + pass.value);
+               xhttp.send();
+        });
+    </script>
+</body>
+</html>

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 
 @Controller()
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomeController {
     HttpSession httpSession;
 
@@ -20,8 +20,13 @@ public class HomeController {
         this.httpSession = httpSession;
     }
 
-    @GetMapping("/")
-    public String home(HttpSession httpSession) {
+    @GetMapping("/home")
+    public String home() {
         return "index";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 }
