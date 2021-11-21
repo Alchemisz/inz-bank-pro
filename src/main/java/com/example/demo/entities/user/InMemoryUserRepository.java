@@ -5,13 +5,14 @@ import com.example.demo.security.priviledges.UserPriviledges;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class InMemoryUserRepository implements UserRepository {
     private Map<String, User> users;
 
     public InMemoryUserRepository() {
-        this.users = new HashMap<>();
+        this.users = new ConcurrentHashMap<>();
         User user = new User("test", BCrypt.withDefaults().hashToString(5, "test".toCharArray()), UserPriviledges.getClientPriviledges());
         this.users.put(user.getLogin(), user);
 
