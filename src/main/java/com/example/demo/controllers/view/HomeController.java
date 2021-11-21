@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+package com.example.demo.controllers.view;
 
 import com.example.demo.entities.user.User;
 import com.example.demo.security.priviledges.UserPriviledges;
