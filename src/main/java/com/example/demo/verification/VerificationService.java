@@ -45,7 +45,7 @@ public class VerificationService {
     public String registerLoginRequest(LoginRequest loginRequest) {
         VerificationObject verificationObject = new VerificationObject(getCode(), loginRequest);
         String id = verificationRepository.registerVerificationObject(verificationObject);
-        System.out.println("registered login request: id = " + id);
+        System.out.println("registered login request: id = " + id + "code: " + verificationObject.getCode());
         return id;
     }
 }
