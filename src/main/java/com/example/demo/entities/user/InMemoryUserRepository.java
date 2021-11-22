@@ -29,8 +29,8 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUser(String login) {
-        return Optional.ofNullable(users.get(login));
+    public User getUser(String login) {
+        return users.get(login);
     }
 
     @Override
