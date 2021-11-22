@@ -29,7 +29,7 @@ public class VerificationService {
         Map<String, String> response = new HashMap<>();
         VerificationObject request = verificationRepository.getVerificationObject(requestId);
         if(request != null) {
-            if(request.getCode().equals(code)) {
+            if(request.getCode().equals(code.replace("\"", ""))) {
                 request.getRequestOrder().execute();
                 verificationRepository.removeVerificationObject(requestId);
                 response.put("verified", "true");
@@ -45,7 +45,7 @@ public class VerificationService {
     public String registerLoginRequest(LoginRequest loginRequest) {
         VerificationObject verificationObject = new VerificationObject(getCode(), loginRequest);
         String id = verificationRepository.registerVerificationObject(verificationObject);
-        System.out.println("registered login request: id = " + id + "code: " + verificationObject.getCode());
+        System.out.println("registered login request id = " + id + " code: " + verificationObject.getCode());
         return id;
     }
 }
