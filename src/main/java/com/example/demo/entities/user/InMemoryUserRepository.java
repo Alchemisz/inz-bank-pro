@@ -11,8 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InMemoryUserRepository implements UserRepository {
     private Map<String, User> users;
 
-
-
     public InMemoryUserRepository() {
         this.users = new ConcurrentHashMap<>();
         User user = new User("test", BCrypt.withDefaults().hashToString(5, "test".toCharArray()), UserPriviledges.getClientPriviledges());
@@ -25,8 +23,8 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUser(String login) {
-        return Optional.ofNullable(users.get(login));
+    public User getUser(String login) {
+        return users.get(login);
     }
 
     @Override
