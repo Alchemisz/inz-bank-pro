@@ -14,7 +14,7 @@ public class User {
     private String login;
     private String pass;
     private UserPriviledges userPriviledges;
-    private List<String> accounts;
+    private List<BankAccount> accounts;
 
     public User(String login, String pass, UserPriviledges userPriviledges) {
         this.accounts = new LinkedList<>();
@@ -24,7 +24,7 @@ public class User {
         this.userPriviledges = userPriviledges;
     }
 
-    public void addAccount(String bankAccount){
+    public void addAccount(BankAccount bankAccount){
         accounts.add(bankAccount);
     };
 

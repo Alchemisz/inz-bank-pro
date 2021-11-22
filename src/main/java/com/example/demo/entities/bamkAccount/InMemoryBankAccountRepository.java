@@ -23,7 +23,7 @@ public class InMemoryBankAccountRepository implements BankAccountRepository{
     }
 
     @Override
-    public Optional<BankAccount> getBankAccount(String accountNUmber) {
-        return Optional.ofNullable(bankAccountsMap.get(accountNUmber));
+    public BankAccount getBankAccount(String accountNUmber) {
+        return bankAccountsMap.get(accountNUmber);
     }
 }

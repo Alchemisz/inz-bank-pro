@@ -5,6 +5,6 @@ import java.util.Optional;
 
 public interface BankAccountRepository {
 
-    public Optional<BankAccount> getBankAccount(String accountNUmber);
+    public BankAccount getBankAccount(String accountNUmber);
 
 }
