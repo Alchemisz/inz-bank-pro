@@ -36,7 +36,8 @@
 
                 <td th:text="${account.accountNumber}"></td>
                 <td th:text="${account.balance}"></td>
-                <td><a href="${pageContext.request.contextPath}/test"><input type="button" value="Show Details"/></a></td>
+                <td><a th:href="@{/client/account(accountNumber=${account.accountNumber})}"><input type="button" value="Show Details"/></a></td>
+
 
             </tr>
         </tbody>

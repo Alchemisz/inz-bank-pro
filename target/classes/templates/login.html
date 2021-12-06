@@ -8,29 +8,78 @@
             width: 120px;
             height: 20px;
         }
+        #verify {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            opacity: 0.7;
+            background-color: black;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        #verify > div {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #verify button {
+            width: 120px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
     <input id="login" type="text"/>
     <input id="pass" type="text"/>
     <button id="submit">zaloguj</button>
+    <div id="verify">
+        <div>
+            <input id="verifyCode" />
+            <button id="submitVerification">potwierdź</button>
+        </div>
+    </div>
     <script>
         var login = document.getElementById("login");
         var pass = document.getElementById("pass");
         var submit = document.getElementById("submit");
+        var verify = document.getElementById("verify");
+        var verifyCode = document.getElementById("verifyCode");
+        var submitVerification = document.getElementById("submitVerification");
+
+        var loginRequestId = -1;
 
         submit.addEventListener('click', () => {
                const xhttp = new XMLHttpRequest();
 
                xhttp.onload = function() {
-                    console.log(this.responseText);
-                    if(this.responseText == "true") {
-                        window.location = "/client/home";
+                    var json = JSON.parse(this.responseText)
+                    if(json['requestId']) {
+                        loginRequestId = json['requestId'];
+                        verify.style.display = 'block';
+                    } else {
+                        console.log(json['errorMsg']);
                     }
                }
                xhttp.open("POST", "/auth/login", true);
                xhttp.setRequestHeader("Authentication", login.value + ":" + pass.value);
                xhttp.send();
+        });
+
+        submitVerification.addEventListener('click', () => {
+            const xhttp = new XMLHttpRequest();
+               xhttp.onload = function() {
+                    var json = JSON.parse(this.responseText)
+                    console.log(json);
+                    if(json['verified'] == "true") {
+                        window.location = "/client/home";
+                    }
+               }
+               xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);
+               xhttp.setRequestHeader("Content-Type", "application/json");
+               console.log(JSON.stringify({code:verifyCode.value}))
+               xhttp.send(JSON.stringify({code:verifyCode.value}));
         });
     </script>
 </body>
