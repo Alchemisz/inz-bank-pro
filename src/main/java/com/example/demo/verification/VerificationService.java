@@ -1,5 +1,6 @@
 package com.example.demo.verification;
 
+import com.example.demo.entities.request.TransferRequest;
 import com.example.demo.entities.security.LoginRequest;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,14 @@ public class VerificationService {
         VerificationObject verificationObject = new VerificationObject(getCode(), loginRequest);
         String id = verificationRepository.registerVerificationObject(verificationObject);
         System.out.println("registered login request id = " + id + " code: " + verificationObject.getCode());
+        return id;
+    }
+
+    public String registerTransferRequest(TransferRequest transferRequest)
+    {
+        VerificationObject verificationObject = new VerificationObject(getCode(), transferRequest);
+        String id = verificationRepository.registerVerificationObject(verificationObject);
+        System.out.println("registered transfer request id = " + id + " code: " + verificationObject.getCode());
         return id;
     }
 }
