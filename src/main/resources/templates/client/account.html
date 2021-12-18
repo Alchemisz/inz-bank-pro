@@ -17,15 +17,15 @@
 <div class="container">
 
 
+    <a th:href="@{/client/currency/currency-conversion(accountNumber=${account.accountNumber})}"><button>Currency convertion</button></a>
     <hr>
 
 
 
 
-
-                <div th:text="${account.accountNumber}"></div>
-                <div th:text="${account.balance}"></div>
-                <div><a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}"><input type="button" value="Transfer"/></a></div>
+    <div th:text="${account.accountNumber}"></div>
+    <div th:text="${account.balance} + ' ' + ${account.currency.name}"></div>
+    <div><a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}"><input type="button" value="Transfer"/></a></div>
 
 
 
