@@ -40,6 +40,8 @@ public class CurrencyConversionController {
         Currency currency = currencyRepository.findById(newCurrency.getValue());
         bankAccount.setCurrency(currency);
 
+        //TODO tu będzie kiedyś update konta bankowego w bazie
+
         return "redirect:/client/home";
     }
 
