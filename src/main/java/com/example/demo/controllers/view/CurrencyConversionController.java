@@ -4,8 +4,7 @@ import com.example.demo.entities.StringWrapper;
 import com.example.demo.entities.bamkAccount.BankAccount;
 import com.example.demo.entities.bamkAccount.BankAccountRepository;
 import com.example.demo.entities.currency.Currency;
-import com.example.demo.entities.currency.CurrencyRepository;
-import com.example.demo.entities.currency.InMemoryCurrencyRepository;
+import com.example.demo.service.currency.CurrencyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/client")
 public class CurrencyConversionController {
 
-    private CurrencyRepository currencyRepository;
+    private CurrencyService currencyService;
     private BankAccountRepository bankAccountRepository;
 
-    public CurrencyConversionController(CurrencyRepository currencyRepository, BankAccountRepository bankAccountRepository) {
-        this.currencyRepository = currencyRepository;
+    public CurrencyConversionController(CurrencyService currencyService, BankAccountRepository bankAccountRepository) {
+        this.currencyService = currencyService;
         this.bankAccountRepository = bankAccountRepository;
     }
 
@@ -28,7 +27,8 @@ public class CurrencyConversionController {
 
         model.addAttribute("currentCurrency", new StringWrapper(bankAccount.getCurrency().getName()));
         model.addAttribute("accountNumber", accountNumber);
-        model.addAttribute("currencies", currencyRepository.findAll());
+        model.addAttribute("currencies", currencyService.findAll());
+
         return "/client/currency-conversion";
     }
 
@@ -37,7 +37,7 @@ public class CurrencyConversionController {
                                                @RequestParam("accountNumber") String accountNumber){
 
         BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
-        Currency currency = currencyRepository.findById(newCurrency.getValue());
+        Currency currency = currencyService.findById(newCurrency.getValue());
         bankAccount.setCurrency(currency);
 
         //TODO tu będzie kiedyś update konta bankowego w bazie
