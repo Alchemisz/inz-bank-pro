@@ -1,7 +1,5 @@
-package com.example.demo.entities.bamkAccount;
+package com.example.demo.entities.bankAccount;
 
-
-import java.util.Optional;
 
 public interface BankAccountRepository {
 

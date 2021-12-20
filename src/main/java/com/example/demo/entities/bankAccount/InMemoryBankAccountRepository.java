@@ -1,8 +1,7 @@
-package com.example.demo.entities.bamkAccount;
+package com.example.demo.entities.bankAccount;
 
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
