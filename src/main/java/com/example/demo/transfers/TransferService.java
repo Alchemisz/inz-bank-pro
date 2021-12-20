@@ -22,17 +22,23 @@ public class TransferService {
         this.bankAccountRepository = bankAccountRepository;
     }
 
-    private String id = "0";
+    private String id = "1";
 
     public synchronized String getNextId() {
         String id = this.id;
-        this.id = new Date().toString();
+        int intId = Integer.parseInt(id);
+        this.id = (++intId) + "";
         return id;
     }
     public void registerTransfer(Transfer transfer) {
         //System.out.println("próba transferu: " + transfer.getId() + " wysyłkowicz: " + transfer.getSenderId() + "odbiorca: " + transfer.getReceiverId());
         BankAccount sender = bankAccountRepository.getBankAccount(transfer.getSenderId());
         BankAccount reciever = bankAccountRepository.getBankAccount(transfer.getReceiverId());
+
+        if(reciever.getAccountNumber().equals(sender.getAccountNumber())){
+            throw new IllegalArgumentException("Can't send transfer to yourself!");
+        }
+
         if(reciever != null) {
 
             BigDecimal newRecieverBalance = reciever.getBalance().add(transfer.getAmount());
@@ -42,7 +48,12 @@ public class TransferService {
         } else {
             System.out.println("odbiorca zewnętrzny");
         }
+        transferRepository.addTransfer(transfer);
     }
+
+    public List<Transfer> getAssignedTransfers(BankAccount bankAccount){
+        return transferRepository.getAccountsTransfers(bankAccount);
+    };
 
     public List<Transfer> getMarkedTransfers() {
         return null;

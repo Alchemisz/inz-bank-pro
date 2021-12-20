@@ -18,19 +18,31 @@
 
 
     <hr>
-
-
-
-
-
-                <div th:text="${account.accountNumber}"></div>
-                <div th:text="${account.balance}"></div>
-                <div><a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}"><input type="button" value="Transfer"/></a></div>
-
-
-
-
-
+    <div th:text="'Account number:' + ${account.accountNumber}"></div>
+    <br>
+    <div th:text="'Balance: ' + ${account.balance}"></div>
+    <div><a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}"><input type="button" value="Transfer"/></a></div>
+    <hr>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Transfer id</th>
+            <th>Transfer date</th>
+            <th>Sender</th>
+            <th>Receiver</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="transfer : ${assignedTransfers}">
+                <td th:text="${transfer.id}"></td>
+                <td th:text="${transfer.transferDate}"></td>
+                <td th:text="${transfer.senderId}"></td>
+                <td th:text="${transfer.receiverId}"></td>
+                <td th:text="${transfer.amount}"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
