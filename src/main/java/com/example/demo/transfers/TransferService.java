@@ -43,6 +43,7 @@ public class TransferService {
             System.out.println("odbiorca zewnętrzny");
         }
     }
+
     public List<Transfer> getMarkedTransfers() {
         return null;
     }

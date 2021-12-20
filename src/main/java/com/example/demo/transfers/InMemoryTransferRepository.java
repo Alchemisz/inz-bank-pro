@@ -1,5 +1,6 @@
 package com.example.demo.transfers;
 
+import com.example.demo.entities.bankAccount.BankAccount;
 import com.example.demo.entities.transfers.Transfer;
 import com.example.demo.entities.user.User;
 import org.springframework.stereotype.Repository;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryTransferRepository implements TransferRepository{
@@ -27,7 +29,9 @@ public class InMemoryTransferRepository implements TransferRepository{
     }
 
     @Override
-    public List<Transfer> getUsersTransfers(User user) {
-        return null;
+    public List<Transfer> getAccountsTransfers(BankAccount bankAccount) {
+        return transferMap.values().stream()
+                .filter(e -> e.getSenderId().equals(bankAccount.getAccountNumber()) || e.getReceiverId().equals(bankAccount.getAccountNumber()))
+                .collect(Collectors.toList());
     }
 }
