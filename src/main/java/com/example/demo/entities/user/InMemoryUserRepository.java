@@ -21,6 +21,7 @@ public class InMemoryUserRepository implements UserRepository {
         this.users = new ConcurrentHashMap<>();
         User user = new User("test", BCrypt.withDefaults().hashToString(5, "test".toCharArray()), UserPriviledges.getClientPriviledges());
         user.addAccount(bankAccountRepository.getBankAccount("200040003000"));
+        user.addAccount(bankAccountRepository.getBankAccount("2342353453445"));
         this.users.put(user.getLogin(), user);
 
         User user2 = new User("test2", BCrypt.withDefaults().hashToString(5, "test2".toCharArray()), UserPriviledges.getNoPriviledges());

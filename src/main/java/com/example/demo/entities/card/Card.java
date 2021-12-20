@@ -1,6 +1,6 @@
 package com.example.demo.entities.card;
 
-import com.example.demo.entities.bamkAccount.BankAccount;
+import com.example.demo.entities.bankAccount.BankAccount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

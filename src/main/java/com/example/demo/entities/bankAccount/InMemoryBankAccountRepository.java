@@ -19,6 +19,9 @@ public class InMemoryBankAccountRepository implements BankAccountRepository{
 
         BankAccount bankAccount2 = new BankAccount("345623450984", new BigDecimal("864.72"));
         bankAccountsMap.put(bankAccount2.getAccountNumber(), bankAccount2);
+
+        BankAccount bankAccount3 = new BankAccount("2342353453445", new BigDecimal("100.72"));
+        bankAccountsMap.put(bankAccount3.getAccountNumber(), bankAccount3);
     }
 
     @Override

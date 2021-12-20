@@ -3,6 +3,8 @@ package com.example.demo.controllers.rest;
 import com.example.demo.entities.bankAccount.BankAccount;
 import com.example.demo.entities.bankAccount.BankAccountRepository;
 import com.example.demo.entities.request.TransferRequest;
+import com.example.demo.entities.transfers.Transfer;
+import com.example.demo.transfers.TransferService;
 import com.example.demo.verification.VerificationService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +21,11 @@ import java.util.Map;
 public class TransferController {
 
     private VerificationService verificationService;
-    private BankAccountRepository bankAccountRepository;
+    private TransferService transferService;
 
-    public TransferController(VerificationService verificationService, BankAccountRepository bankAccountRepository) {
+    public TransferController(VerificationService verificationService, TransferService transferService) {
         this.verificationService = verificationService;
-        this.bankAccountRepository = bankAccountRepository;
+        this.transferService = transferService;
     }
 
     @PostMapping("/transfer")
@@ -34,8 +36,11 @@ public class TransferController {
         String reciever = payload.get("reciever").toString().replace("\"","");
         BigDecimal amount = new BigDecimal(payload.get("amount").asDouble());
         System.out.println(accountNumber+" "+reciever+" "+amount);
-        BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
-        TransferRequest transferRequest = new TransferRequest(bankAccount,amount);
+
+
+        Transfer transfer = new Transfer(transferService.getNextId(), accountNumber, reciever, amount);
+
+        TransferRequest transferRequest = new TransferRequest(transfer, transferService);
         String id = verificationService.registerTransferRequest(transferRequest);
         response.put("requestId", id);
         return response;

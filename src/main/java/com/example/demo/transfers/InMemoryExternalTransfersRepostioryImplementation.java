@@ -1,9 +1,10 @@
 package com.example.demo.transfers;
 
+import com.example.demo.entities.transfers.Transfer;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class InMemoryExternalTransfersRepostioryImplementation extends ExternalTransfersRepository{
+public class InMemoryExternalTransfersRepostioryImplementation implements ExternalTransfersRepository {
 
     @Override
     public void addTransfer(Transfer transfer) {

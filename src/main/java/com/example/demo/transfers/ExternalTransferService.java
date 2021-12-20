@@ -4,7 +4,9 @@ public class ExternalTransferService {
 
     ExternalTransfersRepository externalTransfersRepository;
 
-        public void handleSession();
+    public void handleSession() {
+
+    }
 
 
 }
