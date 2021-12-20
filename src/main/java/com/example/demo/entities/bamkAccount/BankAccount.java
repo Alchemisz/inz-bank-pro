@@ -25,9 +25,9 @@ public class BankAccount {
     public void setCurrency(Currency currency) {
         if (currency == null) return;
         //Do PLN
-        BigDecimal multiplyResult = this.balance.multiply(BigDecimal.valueOf(this.currency.getToPLN()));
+        BigDecimal multiplyResult = this.balance.multiply(this.currency.getToPLN());
         //Z PLN na nową walutę
-        BigDecimal newBalance = multiplyResult.multiply(BigDecimal.valueOf(currency.getFromPLN()));
+        BigDecimal newBalance = multiplyResult.multiply(currency.getFromPLN());
 
         //Zaokrąglenie 2 miejsca po przecinku
         newBalance = newBalance.setScale(2, RoundingMode.HALF_UP);

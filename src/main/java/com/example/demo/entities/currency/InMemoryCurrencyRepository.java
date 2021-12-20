@@ -2,6 +2,7 @@ package com.example.demo.entities.currency;
 
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +14,9 @@ public class InMemoryCurrencyRepository implements CurrencyRepository{
     public InMemoryCurrencyRepository() {
 
         currencies = new ArrayList<>();
-        currencies.add(new Currency("PLN", 1, 1));
-        currencies.add(new Currency("EUR", 4.63, 0.22));
-        currencies.add(new Currency("USD", 4.12, 0.24));
+        currencies.add(new Currency("PLN", new BigDecimal(1.0), new BigDecimal(1.0)));
+        currencies.add(new Currency("EUR", new BigDecimal(4.63), new BigDecimal(0.2159)));
+        currencies.add(new Currency("USD", new BigDecimal(4.12), new BigDecimal(0.2427)));
 
     }
 
