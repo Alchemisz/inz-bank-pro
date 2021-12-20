@@ -24,7 +24,7 @@ public class InMemoryUserRepository implements UserRepository {
         user.addAccount(bankAccountRepository.getBankAccount("2342353453445"));
         this.users.put(user.getLogin(), user);
 
-        User user2 = new User("test2", BCrypt.withDefaults().hashToString(5, "test2".toCharArray()), UserPriviledges.getNoPriviledges());
+        User user2 = new User("test2", BCrypt.withDefaults().hashToString(5, "test2".toCharArray()), UserPriviledges.getEmployeePriviledges());
         user2.addAccount(bankAccountRepository.getBankAccount("345623450984"));
         this.users.put(user2.getLogin(), user2);
     }

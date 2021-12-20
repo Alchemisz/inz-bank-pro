@@ -1,5 +1,8 @@
 package com.example.demo.entities.user;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class UserService {
     private UserRepository userRepository;
 
