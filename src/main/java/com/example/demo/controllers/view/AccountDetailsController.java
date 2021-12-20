@@ -1,7 +1,7 @@
 package com.example.demo.controllers.view;
 
-import com.example.demo.entities.bamkAccount.BankAccount;
-import com.example.demo.entities.bamkAccount.BankAccountRepository;
+import com.example.demo.entities.bankAccount.BankAccount;
+import com.example.demo.entities.bankAccount.BankAccountRepository;
 import com.example.demo.entities.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

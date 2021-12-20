@@ -1,6 +1,6 @@
 package com.example.demo.entities.request;
 
-import com.example.demo.entities.bamkAccount.BankAccount;
+import com.example.demo.entities.bankAccount.BankAccount;
 
 import java.math.BigDecimal;
 

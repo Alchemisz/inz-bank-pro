@@ -1,7 +1,7 @@
 package com.example.demo.controllers.rest;
 
-import com.example.demo.entities.bamkAccount.BankAccount;
-import com.example.demo.entities.bamkAccount.BankAccountRepository;
+import com.example.demo.entities.bankAccount.BankAccount;
+import com.example.demo.entities.bankAccount.BankAccountRepository;
 import com.example.demo.entities.request.TransferRequest;
 import com.example.demo.verification.VerificationService;
 import com.fasterxml.jackson.databind.JsonNode;

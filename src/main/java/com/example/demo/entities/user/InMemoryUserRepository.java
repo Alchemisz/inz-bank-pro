@@ -1,7 +1,7 @@
 package com.example.demo.entities.user;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.example.demo.entities.bamkAccount.BankAccountRepository;
+import com.example.demo.entities.bankAccount.BankAccountRepository;
 import com.example.demo.security.priviledges.UserPriviledges;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
