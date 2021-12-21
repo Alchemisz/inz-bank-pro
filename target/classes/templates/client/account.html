@@ -18,31 +18,40 @@
 
 
     <hr>
-    <div th:text="'Account number:' + ${account.accountNumber}"></div>
+    <p><b>Account number: </b><span th:text="${account.accountNumber}"></span></p>
+    <p><b>Balance: </b><span th:text="${account.balance}"></span></p>
     <br>
-    <div th:text="'Balance: ' + ${account.balance}"></div>
-    <div><a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}"><input type="button" value="Transfer"/></a></div>
+    <div>
+        <a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}">
+            <input type="button" class="btn btn-outline-dark" value="Transfer"/>
+        </a>
+    </div>
     <hr>
-    <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th>Transfer id</th>
-            <th>Transfer date</th>
-            <th>Sender</th>
-            <th>Receiver</th>
-            <th>Amount</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr th:each="transfer : ${assignedTransfers}">
-                <td th:text="${transfer.id}"></td>
-                <td th:text="${transfer.transferDate}"></td>
-                <td th:text="${transfer.senderId}"></td>
-                <td th:text="${transfer.receiverId}"></td>
-                <td th:text="${transfer.amount}"></td>
+    <th:block th:if="${not #lists.isEmpty(assignedTransfers)}">
+
+        <h2 class="text-center">Transfers History</h2>
+        <br>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Transfer id</th>
+                <th>Transfer date</th>
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Amount</th>
             </tr>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <tr th:each="transfer : ${assignedTransfers}">
+                    <td th:text="${transfer.id}"></td>
+                    <td th:text="${transfer.transferDate}"></td>
+                    <td th:text="${transfer.senderId}"></td>
+                    <td th:text="${transfer.receiverId}"></td>
+                    <td th:text="${transfer.amount}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </th:block>
 </div>
 </body>
 </html>
