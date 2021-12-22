@@ -47,7 +47,15 @@
                     <td th:text="${transfer.transferDate}"></td>
                     <td th:text="${transfer.senderId}"></td>
                     <td th:text="${transfer.receiverId}"></td>
-                    <td th:text="${transfer.amount}"></td>
+
+                    <th:block th:if="${account.accountNumber == transfer.senderId}">
+                        <td style="color: red" th:text="'-' + ${transfer.amount}"></td>
+                    </th:block>
+
+                    <th:block th:if="${account.accountNumber == transfer.receiverId}">
+                        <td style="color: green" th:text="'+' + ${transfer.amount}"></td>
+                    </th:block>
+
                 </tr>
             </tbody>
         </table>
