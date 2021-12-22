@@ -8,12 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/client")
+@SessionAttributes("account")
 public class ClientTransferController {
+
     private String prefix = "/client/";
     private BankAccountRepository bankAccountRepository;
 
@@ -22,11 +25,7 @@ public class ClientTransferController {
     }
 
     @GetMapping("/transfer")
-    public String transfer(HttpSession httpSession, Model model, @RequestParam("accountNumber") String accountNumber) {
-        User user = (User) httpSession.getAttribute("user");
-        BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
-        model.addAttribute("account", bankAccount);
-
+    public String transfer() {
         return prefix + "transfer";
     }
 

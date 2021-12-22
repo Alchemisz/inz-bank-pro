@@ -1,7 +1,5 @@
 package com.example.demo.controllers.rest;
 
-import com.example.demo.entities.bankAccount.BankAccount;
-import com.example.demo.entities.bankAccount.BankAccountRepository;
 import com.example.demo.entities.request.TransferRequest;
 import com.example.demo.entities.transfers.Transfer;
 import com.example.demo.transfers.TransferService;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -29,8 +28,10 @@ public class TransferController {
     }
 
     @PostMapping("/transfer")
-    public Map<String, String>transfer(@RequestBody JsonNode payload)
+    public Map<String, String>transfer(@RequestBody JsonNode payload, SessionStatus sessionStatus)
     {
+        sessionStatus.setComplete(); //Deleting account attribute from the session
+
         Map<String, String> response = new HashMap<>();
         String accountNumber = payload.get("accountNumber").toString().replace("\"","");
         String reciever = payload.get("reciever").toString().replace("\"","");
