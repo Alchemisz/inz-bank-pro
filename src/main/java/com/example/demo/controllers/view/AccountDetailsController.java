@@ -26,19 +26,11 @@ public class AccountDetailsController {
         this.transferService = transferService;
     }
 
-    @ModelAttribute(name = "account")
-    public BankAccount bankAccount(@RequestParam("accountNumber") String accountNumber){
-        return bankAccountRepository.getBankAccount(accountNumber);
-    }
-
-    @ModelAttribute(name = "assignedTransfers")
-    public List<Transfer> assignedTransfers(@RequestParam("accountNumber") String accountNumber){
-        BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
-        return transferService.getAssignedTransfers(bankAccount);
-    }
-
     @GetMapping("/account")
-    public String account() {
+    public String account(@RequestParam("accountNumber") String accountNumber, Model model) {
+        model.addAttribute("account", bankAccountRepository.getBankAccount(accountNumber));
+        BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
+        model.addAttribute("assignedTransfers", transferService.getAssignedTransfers(bankAccount));
         return prefix + "account";
     }
 

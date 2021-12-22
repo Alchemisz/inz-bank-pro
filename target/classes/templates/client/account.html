@@ -22,7 +22,7 @@
     <p><b>Balance: </b><span th:text="${account.balance}"></span></p>
     <br>
     <div>
-        <a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}">
+        <a th:href="@{/client/transfer}">
             <input type="button" class="btn btn-outline-dark" value="Transfer"/>
         </a>
     </div>
