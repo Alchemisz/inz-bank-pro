@@ -16,7 +16,7 @@
 <body>
 <div class="container">
 
-
+    <br>
     <a th:href="@{/client/currency/currency-conversion(accountNumber=${account.accountNumber})}"><button>Currency convertion</button></a>
     <hr>
 
@@ -24,7 +24,7 @@
 
 
     <div th:text="${account.accountNumber}"></div>
-    <div th:text="${account.balance} + ' ' + ${account.currency.name}"></div>
+    <div th:text="${#numbers.formatDecimal(account.balance, 0, 2)} + ' ' + ${account.currency}"></div>
     <div><a th:href="@{/client/transfer(accountNumber=${account.accountNumber})}"><input type="button" value="Transfer"/></a></div>
 
 

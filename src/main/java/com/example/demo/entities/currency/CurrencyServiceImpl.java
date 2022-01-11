@@ -1,0 +1,40 @@
+package com.example.demo.entities.currency;
+
+import com.example.demo.entities.bamkAccount.BankAccount;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class CurrencyServiceImpl implements CurrencyService{
+
+    CurrencyRepository currencyRepository;
+
+    public CurrencyServiceImpl(CurrencyRepository currencyRepository) {
+        this.currencyRepository = currencyRepository;
+    }
+
+    @Override
+    public Currency findById(String id) {
+        return currencyRepository.findById(id);
+    }
+
+    @Override
+    public List<String> findCurrenciesCodes(String id) {
+        return findById(id).getExchangeRates().keySet().stream().collect(Collectors.toList());
+    }
+
+    @Override
+    public void convertAccountToNewCurrency(BankAccount bankAccount, String newCurrencyCode, Double newCurrencyRate) {
+        BigDecimal rate = BigDecimal.valueOf(newCurrencyRate);
+        BigDecimal newBalance = bankAccount.getBalance().multiply(rate);
+//        Zaokrąglenie do 8 miejsc po przecinku (w celu zachowania dokładności konwersji)
+//        Jak wyświetlam w thymeleaf to wtedy zaokrąglam do 2
+        BigDecimal rounded = newBalance.setScale(8, RoundingMode.HALF_UP);
+        bankAccount.setCurrency(newCurrencyCode);
+        bankAccount.setBalance(rounded);
+    }
+}

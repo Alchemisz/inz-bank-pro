@@ -1,6 +1,6 @@
 package com.example.demo.entities.bamkAccount;
 
-import com.example.demo.entities.currency.InMemoryCurrencyRepository;
+import com.example.demo.entities.currency.ApiCurrencyRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -13,13 +13,13 @@ public class InMemoryBankAccountRepository implements BankAccountRepository{
     private Map<String, BankAccount> bankAccountsMap;
 
 
-    public InMemoryBankAccountRepository(InMemoryCurrencyRepository currencyRepository) {
+    public InMemoryBankAccountRepository() {
         bankAccountsMap = new ConcurrentHashMap<>();
 
-        BankAccount bankAccount1 = new BankAccount("200040003000", new BigDecimal("100.24"), currencyRepository.findById("PLN"));
+        BankAccount bankAccount1 = new BankAccount("200040003000", new BigDecimal("100.24"), "PLN");
         bankAccountsMap.put(bankAccount1.getAccountNumber(), bankAccount1);
 
-        BankAccount bankAccount2 = new BankAccount("345623450984", new BigDecimal("864.72"), currencyRepository.findById("PLN"));
+        BankAccount bankAccount2 = new BankAccount("345623450984", new BigDecimal("864.72"), "PLN");
         bankAccountsMap.put(bankAccount2.getAccountNumber(), bankAccount2);
     }
 

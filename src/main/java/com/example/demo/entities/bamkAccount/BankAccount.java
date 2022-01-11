@@ -14,25 +14,12 @@ public class BankAccount {
 
     private String accountNumber;
     private BigDecimal balance;
-    private Currency currency;
+    private String currency;
 
-    public BankAccount(String accountNumber, BigDecimal balance, Currency currency) {
+    public BankAccount(String accountNumber, BigDecimal balance, String currency) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.currency = currency;
     }
 
-    public void setCurrency(Currency currency) {
-        if (currency == null) return;
-        //Do PLN
-        BigDecimal multiplyResult = this.balance.multiply(this.currency.getToPLN());
-        //Z PLN na nową walutę
-        BigDecimal newBalance = multiplyResult.multiply(currency.getFromPLN());
-
-        //Zaokrąglenie 2 miejsca po przecinku
-        newBalance = newBalance.setScale(2, RoundingMode.HALF_UP);
-
-        this.balance = newBalance;
-        this.currency = currency;
-    }
 }
