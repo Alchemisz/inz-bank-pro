@@ -10,5 +10,6 @@ public interface CurrencyService {
     Currency findById(String id);
     List<String> findCurrenciesCodes(String id);
     void convertAccountToNewCurrency(BankAccount bankAccount, String newCurrencyCode, Double newCurrencyRate);
+    List<String> getCurrenciesCodes();
 
 }

@@ -28,11 +28,15 @@ public class CurrencyConversionController {
     public String currencyConversion(Model model, @RequestParam("accountNumber") String accountNumber){
         BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
 
-        Currency bankAccountCurrency = currencyService.findById(bankAccount.getCurrency());
-
         model.addAttribute("currentCurrency", new StringWrapper(bankAccount.getCurrency()));
         model.addAttribute("accountNumber", accountNumber);
-        model.addAttribute("currencies", bankAccountCurrency.getExchangeRates().keySet().stream().collect(Collectors.toList()));
+
+        List<String> currencies = currencyService.getCurrenciesCodes()
+                .stream()
+                .filter(e -> !e.equals(bankAccount.getCurrency()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("currencies", currencies);
 
         return "/client/currency-conversion";
     }

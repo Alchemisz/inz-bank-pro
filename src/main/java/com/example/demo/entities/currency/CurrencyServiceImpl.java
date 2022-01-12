@@ -37,4 +37,9 @@ public class CurrencyServiceImpl implements CurrencyService{
         bankAccount.setCurrency(newCurrencyCode);
         bankAccount.setBalance(rounded);
     }
+
+    @Override
+    public List<String> getCurrenciesCodes() {
+        return currencyRepository.getCurrenciesCodes();
+    }
 }

@@ -11,14 +11,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ApiCurrencyRepository implements CurrencyRepository{
 
-    private List<Currency> currencies;
+    private List<String> currenciesCodes;
 
     public ApiCurrencyRepository() {
-        currencies = new ArrayList<>();
+        currenciesCodes = new ArrayList<>();
+        currenciesCodes = findById("USD").getExchangeRates().keySet().stream().collect(Collectors.toList());
+        currenciesCodes.add("USD");
+
+    }
+
+    public List<String> getCurrenciesCodes(){
+        return this.currenciesCodes;
     }
 
     @Override
