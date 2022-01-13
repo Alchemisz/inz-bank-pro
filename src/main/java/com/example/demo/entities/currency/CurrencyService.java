@@ -11,5 +11,5 @@ public interface CurrencyService {
     List<String> findCurrenciesCodes(String id);
     void convertAccountToNewCurrency(BankAccount bankAccount, String newCurrencyCode, Double newCurrencyRate);
     List<String> getCurrenciesCodes();
-
+    List<String> getCurrenciesWithoutCode(String code);
 }

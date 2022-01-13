@@ -8,7 +8,10 @@
     <th:p th:text="'For this bank account current currency is: ' + ${currentCurrency.value}"></th:p>
     <br>
     <form th:action="@{/client/currency/processing(accountNumber=${accountNumber})}" th:method="put">
-
+        <br>
+        <label>Choose new currency for account: </label>
+        <br>
+        <br>
         <select th:field="${currentCurrency.value}">
             <th:block th:object="${currencies}" >
                 <option th:each="item : ${currencies}" th:value="${item}" th:text="${item}"></option>

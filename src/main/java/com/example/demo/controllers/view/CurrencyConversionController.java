@@ -31,11 +31,7 @@ public class CurrencyConversionController {
         model.addAttribute("currentCurrency", new StringWrapper(bankAccount.getCurrency()));
         model.addAttribute("accountNumber", accountNumber);
 
-        List<String> currencies = currencyService.getCurrenciesCodes()
-                .stream()
-                .filter(e -> !e.equals(bankAccount.getCurrency()))
-                .collect(Collectors.toList());
-
+        List<String> currencies = currencyService.getCurrenciesWithoutCode(bankAccount.getCurrency());
         model.addAttribute("currencies", currencies);
 
         return "/client/currency-conversion";

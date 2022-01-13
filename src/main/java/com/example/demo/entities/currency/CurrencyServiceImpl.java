@@ -42,4 +42,12 @@ public class CurrencyServiceImpl implements CurrencyService{
     public List<String> getCurrenciesCodes() {
         return currencyRepository.getCurrenciesCodes();
     }
+
+    @Override
+    public List<String> getCurrenciesWithoutCode(String code) {
+        return currencyRepository.getCurrenciesCodes()
+                .stream()
+                .filter(e -> !e.equals(code))
+                .collect(Collectors.toList());
+    }
 }
