@@ -42,8 +42,7 @@ public class CurrencyConversionController {
                                                @RequestParam("accountNumber") String accountNumber){
 
         BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
-        Double currencyRate = currencyService.findById(bankAccount.getCurrency()).getExchangeRates().get(newCurrencyCode.getValue());
-        currencyService.convertAccountToNewCurrency(bankAccount, newCurrencyCode.getValue(), currencyRate);
+        currencyService.convertAccountToNewCurrency(bankAccount, newCurrencyCode.getValue());
 
         //TODO tu będzie kiedyś update konta bankowego w bazie
 

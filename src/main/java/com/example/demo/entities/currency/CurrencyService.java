@@ -9,7 +9,7 @@ public interface CurrencyService {
 
     Currency findById(String id);
     List<String> findCurrenciesCodes(String id);
-    void convertAccountToNewCurrency(BankAccount bankAccount, String newCurrencyCode, Double newCurrencyRate);
+    void convertAccountToNewCurrency(BankAccount bankAccount, String newCurrencyCode);
     List<String> getCurrenciesCodes();
     List<String> getCurrenciesWithoutCode(String code);
 }
