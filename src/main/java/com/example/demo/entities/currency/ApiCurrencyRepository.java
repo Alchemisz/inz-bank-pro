@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -38,12 +39,6 @@ public class ApiCurrencyRepository implements CurrencyRepository{
         try {
             URL urlForGetRequest = new URL(url);
             currency = mapper.readValue(urlForGetRequest, Currency.class);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
