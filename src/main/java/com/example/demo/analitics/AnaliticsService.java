@@ -1,7 +1,7 @@
 package com.example.demo.analitics;
 
-import com.example.demo.entities.bankAccount.BankAccountRepository;
-import com.example.demo.entities.user.UserService;
+import com.example.demo.bankAccount.BankAccountRepository;
+import com.example.demo.user.UserService;
 import com.example.demo.transfers.TransferRepository;
 
 public class AnaliticsService {
