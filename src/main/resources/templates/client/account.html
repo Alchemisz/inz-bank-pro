@@ -16,10 +16,13 @@
 <body>
 <div class="container">
 
-
+    <br>
+    <a th:href="@{/client/currency/currency-conversion(accountNumber=${account.accountNumber})}">
+        <input type="button" class="btn btn-outline-dark" value="Currency convertion">
+    </a>
     <hr>
     <p><b>Account number: </b><span th:text="${account.accountNumber}"></span></p>
-    <p><b>Balance: </b><span th:text="${account.balance}"></span></p>
+    <p><b>Balance: </b><span th:text="${#numbers.formatDecimal(account.balance, 1, 2)} + ' ' + ${account.currency}"></span></p>
     <br>
     <div>
         <a th:href="@{/client/transfer}">
@@ -39,6 +42,7 @@
                 <th>Sender</th>
                 <th>Receiver</th>
                 <th>Amount</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -49,13 +53,14 @@
                     <td th:text="${transfer.receiverId}"></td>
 
                     <th:block th:if="${account.accountNumber == transfer.senderId}">
-                        <td style="color: red" th:text="'-' + ${transfer.amount}"></td>
+                        <td style="color: red" th:text="'-' + ${transfer.amount} + ' ' + ${account.currency}"></td>
                     </th:block>
 
                     <th:block th:if="${account.accountNumber == transfer.receiverId}">
-                        <td style="color: green" th:text="'+' + ${transfer.amount}"></td>
+                        <td style="color: green" th:text="'+' + ${transfer.amount} + ' ' + ${account.currency}"></td>
                     </th:block>
 
+                    <td><a th:href="@{'/api/user/transfer/' + ${transfer.id}}" target="_blank"><input type="button" class="btn btn-outline-dark" value="Show confirmation"/></a></td>
                 </tr>
             </tbody>
         </table>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Convertion</title>
+</head>
+<body>
+    <th:p th:text="'For this bank account current currency is: ' + ${currentCurrency.value}"></th:p>
+    <br>
+    <form th:action="@{/client/currency/processing(accountNumber=${accountNumber})}" th:method="put">
+        <br>
+        <label>Choose new currency for account: </label>
+        <br>
+        <br>
+        <select th:field="${currentCurrency.value}">
+            <th:block th:object="${currencies}" >
+                <option th:each="item : ${currencies}" th:value="${item}" th:text="${item}"></option>
+            </th:block>
+        </select>
+        <input type="submit" th:value="Convert">
+    </form>
+</body>
+</html>
