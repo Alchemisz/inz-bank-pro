@@ -1,28 +1,30 @@
 package com.example.demo.security;
 
-import com.example.demo.entities.security.LoginRequest;
-import com.example.demo.entities.user.User;
-import com.example.demo.entities.user.UserRepository;
+import com.example.demo.request.LoginRequest;
+import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 import com.example.demo.verification.VerificationService;
+import com.example.demo.verification.verificator.AbstractVerificator;
+import com.example.demo.verification.verificator.VerificationType;
+import com.example.demo.verification.verificator.VerificatorAbstractFactory;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @Service
 public class AuthService {
 
     private UserRepository userRepository;
 
-    private VerificationService verificationService;
+    private VerificatorAbstractFactory verificatorAbstractFactory;
 
     private HashingService hashingService;
 
     private HttpSession httpSession;
 
-    public AuthService(UserRepository userRepository, VerificationService verificationService, HashingService hashingService, HttpSession httpSession) {
+    public AuthService(UserRepository userRepository, VerificatorAbstractFactory verificatorAbstractFactory, HashingService hashingService, HttpSession httpSession) {
         this.userRepository = userRepository;
-        this.verificationService = verificationService;
+        this.verificatorAbstractFactory = verificatorAbstractFactory;
         this.hashingService = hashingService;
         this.httpSession = httpSession;
     }
@@ -34,7 +36,8 @@ public class AuthService {
             String userHash = user.getPass();
             if(hashingService.verify(userHash, pass)) {
                 LoginRequest loginRequest = new LoginRequest(httpSession, user);
-                String id = verificationService.registerLoginRequest(loginRequest);
+                AbstractVerificator loginVerificator = verificatorAbstractFactory.getLoginVerificator(VerificationType.EMAIL);
+                String id = loginVerificator.startVerification(loginRequest);
                 return id;
             }
         }

@@ -1,9 +1,6 @@
 package com.example.demo.security.filters;
 
-import com.example.demo.entities.user.User;
-import com.example.demo.entities.user.UserRepository;
-import com.example.demo.security.HashingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.user.User;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
