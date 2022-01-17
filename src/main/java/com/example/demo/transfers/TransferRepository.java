@@ -1,6 +1,6 @@
 package com.example.demo.transfers;
 
-import com.example.demo.entities.bankAccount.BankAccount;
+import com.example.demo.bankAccount.BankAccount;
 
 import java.util.List;
 
