@@ -8,18 +8,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class InMemoryVerificationRepository implements VerificationRepository{
     private ConcurrentHashMap<String, VerificationObject> orderMap;
-    private Long id;
 
     public InMemoryVerificationRepository() {
         this.orderMap = new ConcurrentHashMap<>();
-        this.id = 0L;
     }
-    private String getId() {
-        String id = this.id.toString();
-        this.id += 1;
-        return id;
-    }
-
 
     @Override
     public VerificationObject getVerificationObject(String id) {
@@ -32,9 +24,7 @@ public class InMemoryVerificationRepository implements VerificationRepository{
     }
 
     @Override
-    public String registerVerificationObject(VerificationObject verificationObject) {
-        String id = getId();
+    public void registerVerificationObject(String id, VerificationObject verificationObject) {
         orderMap.put(id, verificationObject);
-        return id;
     }
 }

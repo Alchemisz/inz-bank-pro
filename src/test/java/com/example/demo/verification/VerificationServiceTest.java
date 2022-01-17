@@ -1,7 +1,7 @@
 package com.example.demo.verification;
 
-import com.example.demo.entities.security.LoginRequest;
-import com.example.demo.entities.user.User;
+import com.example.demo.request.LoginRequest;
+import com.example.demo.user.User;
 import com.example.demo.security.priviledges.UserPriviledges;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
@@ -24,9 +24,10 @@ public class VerificationServiceTest {
         User user = new User("test", "test", UserPriviledges.getClientPriviledges());
         HttpSession session = new MockHttpSession();
         LoginRequest loginRequest = new LoginRequest(session, user);
-        String id = verificationService.registerLoginRequest(loginRequest);
+        VerificationObject verificationObject = verificationService.registerRequest(loginRequest);
+        String actualCode = verificationObject.getCode();
 
-        Map<String, String> response = verificationService.verifyCode("100", "0");
+        Map<String, String> response = verificationService.verifyCode(actualCode + "temp", actualCode);
         assertTrue(response.containsKey("errorMsg"));
         assertNull(session.getAttribute("user"));
     }
@@ -36,9 +37,10 @@ public class VerificationServiceTest {
         User user = new User("test", "test", UserPriviledges.getClientPriviledges());
         HttpSession session = new MockHttpSession();
         LoginRequest loginRequest = new LoginRequest(session, user);
-        String id = verificationService.registerLoginRequest(loginRequest);
+        VerificationObject verificationObject = verificationService.registerRequest(loginRequest);
+        String actualCode = verificationObject.getCode();
 
-        Map<String, String> response = verificationService.verifyCode(id, "100");
+        Map<String, String> response = verificationService.verifyCode(actualCode + "temp", actualCode);
         assertTrue(response.containsKey("errorMsg"));
         assertNull(session.getAttribute("user"));
     }
@@ -48,9 +50,10 @@ public class VerificationServiceTest {
         User user = new User("test", "test", UserPriviledges.getClientPriviledges());
         HttpSession session = new MockHttpSession();
         LoginRequest loginRequest = new LoginRequest(session, user);
-        String id = verificationService.registerLoginRequest(loginRequest);
+        VerificationObject verificationObject = verificationService.registerRequest(loginRequest);
+        String actualCode = verificationObject.getCode();
 
-        Map<String, String> response = verificationService.verifyCode(id, "0");
+        Map<String, String> response = verificationService.verifyCode(actualCode, actualCode);
         assertThat(session.getAttribute("user"), instanceOf(User.class));
     }
 }

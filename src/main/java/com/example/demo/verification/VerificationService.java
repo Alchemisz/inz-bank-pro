@@ -1,13 +1,11 @@
 package com.example.demo.verification;
 
-import com.example.demo.entities.request.TransferRequest;
-import com.example.demo.entities.security.LoginRequest;
+import com.example.demo.request.LoginRequest;
+import com.example.demo.request.RequestOrder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class VerificationService {
@@ -43,18 +41,9 @@ public class VerificationService {
         return response;
     }
 
-    public String registerLoginRequest(LoginRequest loginRequest) {
-        VerificationObject verificationObject = new VerificationObject(getCode(), loginRequest);
-        String id = verificationRepository.registerVerificationObject(verificationObject);
-        System.out.println("registered login request id = " + id + " code: " + verificationObject.getCode());
-        return id;
-    }
-
-    public String registerTransferRequest(TransferRequest transferRequest)
-    {
-        VerificationObject verificationObject = new VerificationObject(getCode(), transferRequest);
-        String id = verificationRepository.registerVerificationObject(verificationObject);
-        System.out.println("registered transfer request id = " + id + " code: " + verificationObject.getCode());
-        return id;
+    public VerificationObject registerRequest(RequestOrder request) {
+        VerificationObject verificationObject = new VerificationObject(getCode(), request);
+        verificationRepository.registerVerificationObject(verificationObject.getCode(), verificationObject);
+        return verificationObject;
     }
 }

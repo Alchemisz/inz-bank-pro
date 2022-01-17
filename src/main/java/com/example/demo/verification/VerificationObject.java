@@ -1,12 +1,13 @@
 package com.example.demo.verification;
 
-import com.example.demo.entities.request.RequestOrder;
+import com.example.demo.request.RequestOrder;
 import lombok.Getter;
 
 @Getter
+public
 class VerificationObject {
-    final String code;
-    final RequestOrder requestOrder;
+    String code;
+    RequestOrder requestOrder;
 
     public VerificationObject(String code, RequestOrder requestOrder) {
         this.code = code;
