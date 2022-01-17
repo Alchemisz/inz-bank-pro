@@ -1,4 +1,4 @@
-package com.example.demo.pef;
+package com.example.demo.document.pef;
 
 import com.example.demo.transfers.Transfer;
 import com.lowagie.text.*;

@@ -1,9 +1,6 @@
 package com.example.demo.controllers.rest;
 
-import com.example.demo.entities.user.UserRepository;
 import com.example.demo.security.AuthService;
-import com.example.demo.security.HashingService;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
