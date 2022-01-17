@@ -1,6 +1,7 @@
 package com.example.demo.currency;
 
 import com.example.demo.bankAccount.BankAccount;
+import com.example.demo.bankAccount.BankAccountStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class CurrencyServiceTest {
 
     @PostConstruct
     private void initialize(){
-        bankAccount = new BankAccount("7833456458945", new BigDecimal("100.00"), "PLN");
+        bankAccount = new BankAccount("7833456458945", BankAccountStatus.ACTIVE, new BigDecimal("100.00"), "PLN");
     }
 
     @Test

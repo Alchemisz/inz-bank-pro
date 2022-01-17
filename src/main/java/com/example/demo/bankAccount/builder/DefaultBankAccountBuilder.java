@@ -1,6 +1,7 @@
 package com.example.demo.bankAccount.builder;
 
 import com.example.demo.bankAccount.BankAccount;
+import com.example.demo.bankAccount.BankAccountStatus;
 import com.example.demo.bankAccount.accountNumberGenerator.Generator;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class DefaultBankAccountBuilder implements BankAccountBuilder{
     @Override
     public void buildAccountNumber() {
         this.bankAccount.setAccountNumber(accountNumberGenerator.generate());
+        this.bankAccount.setStatus(BankAccountStatus.INACTIVE);
     }
 
     @Override

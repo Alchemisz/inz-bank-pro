@@ -3,6 +3,7 @@ package com.example.demo.bankAccount;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService{
@@ -31,5 +32,13 @@ public class BankAccountServiceImpl implements BankAccountService{
     @Override
     public List<BankAccount> getBankAccounts() {
         return bankAccountRepository.getBankAccounts();
+    }
+
+    @Override
+    public List<BankAccount> getBankAccounts(BankAccountStatus status) {
+        return bankAccountRepository.getBankAccounts()
+                .stream()
+                .filter(e -> e.getStatus().getTypeName().equals(status.getTypeName()))
+                .collect(Collectors.toList());
     }
 }
