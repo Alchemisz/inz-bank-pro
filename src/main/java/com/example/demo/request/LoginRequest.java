@@ -1,7 +1,6 @@
-package com.example.demo.entities.security;
+package com.example.demo.request;
 
-import com.example.demo.entities.request.RequestOrder;
-import com.example.demo.entities.user.User;
+import com.example.demo.user.User;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +11,10 @@ public class LoginRequest implements RequestOrder {
     public LoginRequest(HttpSession httpSession, User user) {
         this.httpSession = httpSession;
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override

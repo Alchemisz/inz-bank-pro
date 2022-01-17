@@ -1,4 +1,4 @@
-package com.example.demo.entities.request;
+package com.example.demo.request;
 
 public interface RequestOrder {
     public void execute();

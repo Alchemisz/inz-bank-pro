@@ -1,9 +1,7 @@
-package com.example.demo.entities.request;
+package com.example.demo.request;
 
-import com.example.demo.entities.transfers.Transfer;
+import com.example.demo.transfers.Transfer;
 import com.example.demo.transfers.TransferService;
-
-import java.math.BigDecimal;
 
 public class TransferRequest implements RequestOrder{
 
@@ -13,6 +11,10 @@ public class TransferRequest implements RequestOrder{
     public TransferRequest(Transfer transfer, TransferService transferService) {
         this.transfer = transfer;
         this.transferService = transferService;
+    }
+
+    public Transfer getTransfer() {
+        return transfer;
     }
 
     @Override
