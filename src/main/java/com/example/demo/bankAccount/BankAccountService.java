@@ -8,4 +8,5 @@ public interface BankAccountService {
     void registerBankAccount(BankAccount bankAccount);
     boolean isAccountNumberExists(String accountNumber);
     List<BankAccount> getBankAccounts();
+    List<BankAccount> getBankAccounts(BankAccountStatus status);
 }
