@@ -1,4 +1,4 @@
-package com.example.demo.entities.card;
+package com.example.demo.card;
 
 public interface CardService {
     void registerCard(Card card);

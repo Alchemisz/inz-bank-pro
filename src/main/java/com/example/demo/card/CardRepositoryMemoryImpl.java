@@ -1,4 +1,4 @@
-package com.example.demo.entities.card;
+package com.example.demo.card;
 
 import org.springframework.stereotype.Repository;
 
