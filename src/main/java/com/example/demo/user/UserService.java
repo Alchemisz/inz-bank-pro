@@ -1,4 +1,4 @@
-package com.example.demo.entities.user;
+package com.example.demo.user;
 
 public class UserService {
     private UserRepository userRepository;

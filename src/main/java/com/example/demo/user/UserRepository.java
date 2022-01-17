@@ -1,6 +1,4 @@
-package com.example.demo.entities.user;
-
-import java.util.Optional;
+package com.example.demo.user;
 
 public interface UserRepository {
 

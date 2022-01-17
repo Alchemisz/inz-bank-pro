@@ -1,6 +1,6 @@
-package com.example.demo.entities.user;
+package com.example.demo.user;
 
-import com.example.demo.entities.bankAccount.BankAccount;
+import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.security.priviledges.UserPriviledges;
 import lombok.Getter;
 import lombok.Setter;
