@@ -1,4 +1,4 @@
-package com.example.demo.entities.transfers;
+package com.example.demo.transfers;
 
 import lombok.Data;
 

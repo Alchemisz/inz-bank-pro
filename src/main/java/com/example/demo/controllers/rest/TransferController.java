@@ -1,7 +1,7 @@
 package com.example.demo.controllers.rest;
 
 import com.example.demo.entities.request.TransferRequest;
-import com.example.demo.entities.transfers.Transfer;
+import com.example.demo.transfers.Transfer;
 import com.example.demo.transfers.TransferService;
 import com.example.demo.verification.VerificationService;
 import com.fasterxml.jackson.databind.JsonNode;

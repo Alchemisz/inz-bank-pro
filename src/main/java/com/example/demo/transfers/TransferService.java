@@ -3,11 +3,9 @@ package com.example.demo.transfers;
 import com.example.demo.entities.bankAccount.BankAccount;
 import com.example.demo.entities.bankAccount.BankAccountRepository;
 import com.example.demo.entities.card.CardService;
-import com.example.demo.entities.transfers.Transfer;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 @Service

@@ -2,15 +2,10 @@ package com.example.demo.controllers.view;
 
 import com.example.demo.entities.bankAccount.BankAccount;
 import com.example.demo.entities.bankAccount.BankAccountRepository;
-import com.example.demo.entities.transfers.Transfer;
-import com.example.demo.entities.user.User;
 import com.example.demo.transfers.TransferService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping("/client")
