@@ -18,6 +18,7 @@ public class TransferVerificator extends AbstractVerificator{
         VerificationObject verificationObject = verificationService.registerRequest(requestOrder);
         Transfer transfer = transferRequest.getTransfer();
         String message = "you are trying to send " + transfer.getAmount() + " to " + transfer.getReceiverId() + ". validation code: " + verificationObject.getCode();
+        verificationStrategy.verify(message);
         return verificationObject.getCode();
     }
 

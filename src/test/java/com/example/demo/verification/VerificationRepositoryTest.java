@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNull;
 public class VerificationRepositoryTest {
 
     @Autowired
-    private InMemoryVerificationRepository verificationRepository;
+    private VerificationRepository verificationRepository;
 
     @Test
     public void insertAndGetTest() {

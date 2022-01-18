@@ -17,7 +17,7 @@ public class UserService {
     }
     public void blockUser(User user)
     {
-        System.out.println("Blocked user: "+user.getLogin());
+        user.setBlocked(!user.isBlocked());
     }
     public void deactivateUser(User user)
     {
