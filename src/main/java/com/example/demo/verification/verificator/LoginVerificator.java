@@ -17,6 +17,7 @@ class LoginVerificator extends AbstractVerificator {
         User user = loginRequest.getUser();
         VerificationObject verificationObject = verificationService.registerRequest(requestOrder);
         String message = "you are trying to login on " + user.getLogin() + " account. validation code: " + verificationObject.getCode();
+        verificationStrategy.verify(message);
         return verificationObject.getCode();
     }
 }

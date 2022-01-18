@@ -15,10 +15,11 @@ public class User {
     private String pass;
     private UserPriviledges userPriviledges;
     private List<BankAccount> accounts;
+    private boolean blocked;
 
     public User(String login, String pass, UserPriviledges userPriviledges) {
         this.accounts = new LinkedList<>();
-
+        this.blocked = false;
         this.login = login;
         this.pass = pass;
         this.userPriviledges = userPriviledges;

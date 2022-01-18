@@ -13,7 +13,8 @@ public class CreateBankAccountVerificator extends AbstractVerificator {
     @Override
     public String startVerification(RequestOrder requestOrder) {
         VerificationObject verificationObject = verificationService.registerRequest(requestOrder);
-        System.out.println("Trying to create new bank account....");
+        String message = "you are trying to create new account validation code: " + verificationObject.getCode();
+        verificationStrategy.verify(message);
         return verificationObject.getCode();
     }
 }

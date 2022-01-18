@@ -23,7 +23,7 @@ public class VerificatorAbstractFactoryTest {
     @Test
     public void getTransferVerificatorTest() {
         AbstractVerificator verificator = verificatorAbstractFactory.getTransferVerificator(VerificationType.EMAIL);
-        assertEquals(verificator.getClass(), LoginVerificator.class);
+        assertEquals(verificator.getClass(), TransferVerificator.class);
     }
 
     @Test
