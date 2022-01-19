@@ -40,4 +40,9 @@ public class InMemoryBankAccountRepository implements BankAccountRepository{
     public List<BankAccount> getBankAccounts() {
         return this.bankAccountsMap.values().stream().collect(Collectors.toList());
     }
+
+    @Override
+    public void update(BankAccount bankAccount) {
+
+    }
 }

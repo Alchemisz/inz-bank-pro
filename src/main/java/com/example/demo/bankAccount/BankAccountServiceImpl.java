@@ -1,7 +1,9 @@
 package com.example.demo.bankAccount;
 
+import org.springframework.cglib.core.Block;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,10 +37,21 @@ public class BankAccountServiceImpl implements BankAccountService{
     }
 
     @Override
-    public List<BankAccount> getBankAccounts(BankAccountStatus status) {
+    public List<BankAccount> getBankAccounts(BankAccountStatus... status) {
         return bankAccountRepository.getBankAccounts()
                 .stream()
-                .filter(e -> e.getStatus().getTypeName().equals(status.getTypeName()))
+                .filter(e -> Arrays.stream(status).map(s -> s.equals(e.getStatus())).reduce((a, b) -> (a || b)).get())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void update(BankAccount bankAccount) {
+        bankAccountRepository.update(bankAccount);
+    }
+
+    @Override
+    public void blockAccount(String accountNumber) {
+        bankAccountRepository.getBankAccount(accountNumber).setStatus(BankAccountStatus.BLOCKED);
+        bankAccountRepository.update(bankAccountRepository.getBankAccount(accountNumber));
     }
 }

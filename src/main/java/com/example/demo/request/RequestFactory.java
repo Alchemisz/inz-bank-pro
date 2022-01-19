@@ -6,6 +6,7 @@ import com.example.demo.card.CardService;
 import com.example.demo.transfers.Transfer;
 import com.example.demo.transfers.TransferService;
 import com.example.demo.user.User;
+import com.example.demo.verification.verificator.BloackBankAccountVerificator;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -26,5 +27,9 @@ public class RequestFactory {
 
     public RequestOrder createBankAccountRequest(BankAccount bankAccount, User user, BankAccountService bankAccountService){
         return new CreateBankAccountRequest(bankAccount, user, bankAccountService);
+    }
+
+    public RequestOrder createBlockBankAccountRequest(BankAccountService bankAccountService, BankAccount bankAccount){
+        return new BlockBankAccountRequest(bankAccountService, bankAccount);
     }
 }
