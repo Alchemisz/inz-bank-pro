@@ -9,10 +9,8 @@ import com.example.demo.user.User;
 import com.example.demo.verification.verificator.AbstractVerificator;
 import com.example.demo.verification.verificator.VerificationType;
 import com.example.demo.verification.verificator.VerificatorAbstractFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -58,6 +56,18 @@ public class AccountController {
         return response;
     }
 
+    @PostMapping("/accounts/block")
+    public Map<String, String> createBlockRequest(@RequestBody JsonNode payload){
+        String accountNumber = payload.get("accountNumber").toString().replace("\"", "");
+        System.out.println("Odebrano od: " + accountNumber);
+        RequestOrder blockBankAccountRequest = requestFactory.createBlockBankAccountRequest(bankAccountService, bankAccountService.getBankAccount(accountNumber));
+        AbstractVerificator blockBankAccountVerificator = verificatorAbstractFactory.getBlockBankAccountVerificator(VerificationType.EMAIL);
+        String id = blockBankAccountVerificator.startVerification(blockBankAccountRequest);
+        System.out.println("id: " + id);
+        Map<String, String> response = new HashMap<>();
+        response.put("requestId", id);
+        return response;
+    }
 
 
 }

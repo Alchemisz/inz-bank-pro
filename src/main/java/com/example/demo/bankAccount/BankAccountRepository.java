@@ -8,4 +8,5 @@ public interface BankAccountRepository {
     BankAccount getBankAccount(String accountNUmber);
     void register(BankAccount bankAccount);
     List<BankAccount> getBankAccounts();
+    void update(BankAccount bankAccount);
 }

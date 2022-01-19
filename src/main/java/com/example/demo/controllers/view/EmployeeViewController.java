@@ -26,7 +26,7 @@ public class EmployeeViewController {
     public String management(Model model, HttpSession httpSession){
         User user = (User) httpSession.getAttribute("user");
         model.addAttribute("userName", user.getLogin());
-        model.addAttribute("userAccounts", bankAccountService.getBankAccounts(BankAccountStatus.INACTIVE));
+        model.addAttribute("userAccounts", bankAccountService.getBankAccounts(BankAccountStatus.INACTIVE, BankAccountStatus.BLOCKED));
         return "employee/accounts";
     }
 
