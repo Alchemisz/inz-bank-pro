@@ -4,9 +4,9 @@ import com.example.demo.request.RequestOrder;
 import com.example.demo.verification.VerificationObject;
 import com.example.demo.verification.VerificationService;
 
-public class BloackBankAccountVerificator extends AbstractVerificator{
+public class BlockBankAccountVerificator extends AbstractVerificator{
 
-    public BloackBankAccountVerificator(VerificationStrategy verificationStrategy, VerificationService verificationService) {
+    public BlockBankAccountVerificator(VerificationStrategy verificationStrategy, VerificationService verificationService) {
         super(verificationStrategy, verificationService);
     }
 

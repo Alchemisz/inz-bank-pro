@@ -2,11 +2,11 @@ package com.example.demo.card;
 
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankEntityStatus;
-import lombok.AllArgsConstructor;
+import com.example.demo.card.prototype.Prototype;
 import lombok.Data;
 
 @Data
-public class Card {
+public class Card implements Prototype {
 
     private String cardNumber;
     private Integer PIN;
@@ -18,5 +18,16 @@ public class Card {
         this.PIN = PIN;
         this.bankAccount = bankAccount;
         this.status = BankEntityStatus.INACTIVE;
+    }
+
+    public Card(String cardNumber, BankAccount bankAccount) {
+        this.cardNumber = cardNumber;
+        this.bankAccount = bankAccount;
+        this.status = BankEntityStatus.INACTIVE;
+    }
+
+    @Override
+    public Prototype clone() {
+        return new Card(cardNumber, bankAccount);
     }
 }

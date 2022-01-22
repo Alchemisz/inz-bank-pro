@@ -1,5 +1,6 @@
 package com.example.demo.card;
 
+import com.example.demo.bankAccount.BankEntityStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,5 +35,16 @@ public class CardServiceImpl implements CardService{
     @Override
     public boolean isCardNumberExists(String cardNumber) {
         return (cardRepository.getCard(cardNumber) != null);
+    }
+
+    @Override
+    public Card getCard(String cardNumber) {
+        return cardRepository.getCard(cardNumber);
+    }
+
+    @Override
+    public void activateCard(Card card) {
+        card.setStatus(BankEntityStatus.ACTIVE);
+        //TODO UPDATE W BAZIE
     }
 }

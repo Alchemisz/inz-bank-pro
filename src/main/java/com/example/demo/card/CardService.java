@@ -6,4 +6,6 @@ public interface CardService {
     void blockCard(String cardNumber);
     void unblockCard(String cardNumber);
     boolean isCardNumberExists(String cardNumber);
+    Card getCard(String cardNumber);
+    void activateCard(Card card);
 }

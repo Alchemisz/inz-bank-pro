@@ -26,7 +26,7 @@
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.status.typeName}"></td>
             <td th:text="${#numbers.formatDecimal(account.balance, 1, 2)} + ' ' + ${account.currency}"></td>
-            <td><a th:href="@{/employee/account(accountNumber=${account.accountNumber})}"><input type="button" class="btn btn-outline-success" value="Active"/></a></td>
+            <td><a th:href="@{/employee/account(accountNumber=${account.accountNumber})}"><input type="button" class="btn btn-outline-success" value="Activate"/></a></td>
         </tr>
         </tbody>
 

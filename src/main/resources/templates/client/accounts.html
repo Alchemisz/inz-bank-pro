@@ -43,9 +43,9 @@
                         <input type="button" class="btn btn-outline-dark" value="Show Details"/>
                     </a>
 <!--                    Block account button-->
-                    <a>
-                        <input type="button" class="btn btn-outline-danger" value="Block"/>
-                    </a>
+                    <th:block th:if="${account.status.typeName == 'Active'}">
+                        <a><input type="button" class="btn btn-outline-danger" value="Block"/></a>
+                    <th:block>
                 </td>
             </tr>
         </tbody>
