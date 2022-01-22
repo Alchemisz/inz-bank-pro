@@ -2,7 +2,6 @@ package com.example.demo.request;
 
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountService;
-import com.example.demo.bankAccount.BankAccountStatus;
 
 public class BlockBankAccountRequest implements RequestOrder{
 

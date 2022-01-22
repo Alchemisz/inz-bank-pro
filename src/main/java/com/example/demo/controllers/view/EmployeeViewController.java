@@ -2,7 +2,7 @@ package com.example.demo.controllers.view;
 
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountService;
-import com.example.demo.bankAccount.BankAccountStatus;
+import com.example.demo.bankAccount.BankEntityStatus;
 import com.example.demo.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,15 +26,15 @@ public class EmployeeViewController {
     public String management(Model model, HttpSession httpSession){
         User user = (User) httpSession.getAttribute("user");
         model.addAttribute("userName", user.getLogin());
-        model.addAttribute("userAccounts", bankAccountService.getBankAccounts(BankAccountStatus.INACTIVE, BankAccountStatus.BLOCKED));
+        model.addAttribute("userAccounts", bankAccountService.getBankAccounts(BankEntityStatus.INACTIVE, BankEntityStatus.BLOCKED));
         return "employee/accounts";
     }
 
     @GetMapping("/account")
     public String account(@RequestParam("accountNumber") String accountNumber, Model model) {
         BankAccount bankAccount = bankAccountService.getBankAccount(accountNumber);
-        model.addAttribute("userAccounts", bankAccountService.getBankAccounts(BankAccountStatus.INACTIVE));
-        bankAccount.setStatus(BankAccountStatus.ACTIVE);
+        model.addAttribute("userAccounts", bankAccountService.getBankAccounts(BankEntityStatus.INACTIVE));
+        bankAccount.setStatus(BankEntityStatus.ACTIVE);
         return "redirect:/employee";
     }
 

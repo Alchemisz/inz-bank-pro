@@ -22,7 +22,7 @@
     <h3>Account's List</h3>
     <hr>
 
-    <table class="table table-bordered table-striped">
+    <table id="accountsTable" class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
             <th>Account Number</th>
@@ -33,11 +33,20 @@
         </thead>
 
         <tbody>
-            <tr th:each="account : ${userAccounts}">
+            <tr th:each="account : ${userAccounts}" th:id="${account.accountNumber}" class="account-row">
                 <td th:text="${account.accountNumber}"></td>
                 <td th:text="${account.status.typeName}"></td>
                 <td th:text="${#numbers.formatDecimal(account.balance, 1, 2)} + ' ' + ${account.currency}"></td>
-                <td><a th:href="@{/client/account(accountNumber=${account.accountNumber})}"><input type="button" class="btn btn-outline-dark" value="Show Details"/></a></td>
+                <td>
+<!--                    Show details button-->
+                    <a th:href="@{/client/account(accountNumber=${account.accountNumber})}">
+                        <input type="button" class="btn btn-outline-dark" value="Show Details"/>
+                    </a>
+<!--                    Block account button-->
+                    <a>
+                        <input type="button" class="btn btn-outline-danger" value="Block"/>
+                    </a>
+                </td>
             </tr>
         </tbody>
 
@@ -92,5 +101,33 @@
         console.log(JSON.stringify({code:verifyCode.value}))
         xhttp.send(JSON.stringify({code:verifyCode.value}));
     });
+
+
+    //Listeners for block account buttons
+    const table = document.getElementById("accountsTable");
+    const rows = table.getElementsByClassName("account-row");
+
+    Array.from(rows).forEach( e => {
+        const accountNumber = e.getAttribute("id");
+        const buttons = e.getElementsByTagName("input");
+        const blockButton = Array.from(buttons).find(e => e.getAttribute("value") === "Block");
+
+        blockButton.addEventListener('click', () => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                console.log(this.responseText);
+                let json = JSON.parse(this.responseText);
+                if (json["requestId"]){
+                    loginRequestId = json['requestId'];
+                    verify.style.display = 'block';
+                }else{
+                    console.log("Error block button!");
+                }
+            };
+            xhttp.open("POST", "/api/user/accounts/block", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(JSON.stringify({"accountNumber":accountNumber}));
+        });
+    })
 </script>
 </html>

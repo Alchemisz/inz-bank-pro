@@ -30,4 +30,9 @@ public class CardServiceImpl implements CardService{
     public void unblockCard(String cardNumber) {
 
     }
+
+    @Override
+    public boolean isCardNumberExists(String cardNumber) {
+        return (cardRepository.getCard(cardNumber) != null);
+    }
 }

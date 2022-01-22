@@ -16,13 +16,13 @@ public class InMemoryBankAccountRepository implements BankAccountRepository{
     public InMemoryBankAccountRepository() {
         bankAccountsMap = new ConcurrentHashMap<>();
 
-        BankAccount bankAccount1 = new BankAccount("26922018960603293159613803", BankAccountStatus.ACTIVE, new BigDecimal("100.24"), "PLN");
+        BankAccount bankAccount1 = new BankAccount("26922018960603293159613803", BankEntityStatus.ACTIVE, new BigDecimal("100.24"), "PLN");
         bankAccountsMap.put(bankAccount1.getAccountNumber(), bankAccount1);
 
-        BankAccount bankAccount2 = new BankAccount("27926303620212481874123474", BankAccountStatus.ACTIVE, new BigDecimal("864.72"), "PLN");
+        BankAccount bankAccount2 = new BankAccount("27926303620212481874123474", BankEntityStatus.ACTIVE, new BigDecimal("864.72"), "PLN");
         bankAccountsMap.put(bankAccount2.getAccountNumber(), bankAccount2);
 
-        BankAccount bankAccount3 = new BankAccount("97751587375391814999941991", BankAccountStatus.ACTIVE, new BigDecimal("100.72"), "PLN");
+        BankAccount bankAccount3 = new BankAccount("97751587375391814999941991", BankEntityStatus.ACTIVE, new BigDecimal("100.72"), "PLN");
         bankAccountsMap.put(bankAccount3.getAccountNumber(), bankAccount3);
     }
 

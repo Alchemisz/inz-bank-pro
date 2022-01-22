@@ -30,6 +30,33 @@
         </a>
     </div>
     <hr>
+
+<!--    Cards connected to account-->
+    <th:block th:if="${not #lists.isEmpty(account.cardList)}">
+
+        <h2 class="text-center">Cards connected to this account:</h2>
+        <br>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Card Number</th>
+                <th>PIN</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="card : ${account.cardList}">
+                <td th:text="${card.cardNumber}"></td>
+                <td th:text="${card.PIN}"></td>
+                <td th:text="${card.status.typeName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <br>
+    <br>
+<!--    Transfers-->
     <th:block th:if="${not #lists.isEmpty(assignedTransfers)}">
 
         <h2 class="text-center">Transfers History</h2>

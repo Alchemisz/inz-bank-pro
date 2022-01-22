@@ -5,4 +5,5 @@ public interface CardService {
     void unregisterCard(String cardNumber);
     void blockCard(String cardNumber);
     void unblockCard(String cardNumber);
+    boolean isCardNumberExists(String cardNumber);
 }

@@ -7,5 +7,6 @@ public interface BankAccountBuilder {
     void buildAccountNumber();
     void buildAccountBalance();
     void buildAccountCurrency();
+    void buildCard();
     BankAccount getBankAccount();
 }

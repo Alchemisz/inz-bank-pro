@@ -50,7 +50,6 @@ public class AccountController {
         RequestOrder bankAccountRequest = requestFactory.createBankAccountRequest(bankAccount, user, bankAccountService);
         AbstractVerificator bankAccountVerificator = verificatorAbstractFactory.getCreateBankAccountVerificator(VerificationType.EMAIL);
         String id = bankAccountVerificator.startVerification(bankAccountRequest);
-        System.out.println("id: " + id);
         Map<String, String> response = new HashMap<>();
         response.put("requestId", id);
         return response;
@@ -59,11 +58,9 @@ public class AccountController {
     @PostMapping("/accounts/block")
     public Map<String, String> createBlockRequest(@RequestBody JsonNode payload){
         String accountNumber = payload.get("accountNumber").toString().replace("\"", "");
-        System.out.println("Odebrano od: " + accountNumber);
         RequestOrder blockBankAccountRequest = requestFactory.createBlockBankAccountRequest(bankAccountService, bankAccountService.getBankAccount(accountNumber));
         AbstractVerificator blockBankAccountVerificator = verificatorAbstractFactory.getBlockBankAccountVerificator(VerificationType.EMAIL);
         String id = blockBankAccountVerificator.startVerification(blockBankAccountRequest);
-        System.out.println("id: " + id);
         Map<String, String> response = new HashMap<>();
         response.put("requestId", id);
         return response;
