@@ -57,6 +57,10 @@
                             <input type="button" class="btn btn-outline-success" value="Activate"/>
                         </a>
                     </th:block>
+                    <th:block th:if="${card.status.typeName == 'Active'}">
+                        <input type="button" class="btn btn-outline-danger" id="block" value="Block">
+                        <input type="button" class="btn btn-outline-primary" id="newPin" value="Set New PIN">
+                    </th:block>
                 </td>
             </tr>
             </tbody>

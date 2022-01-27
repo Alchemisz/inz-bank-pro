@@ -2,6 +2,7 @@ package com.example.demo.card;
 
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountRepository;
+import com.example.demo.bankAccount.BankEntityStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class CardRepositoryMemoryImpl implements CardRepository{
 
         BankAccount bankAccount1 = bankAccountRepository.getBankAccounts().get(0);
         Card card = new Card("1234", 1234, bankAccount1);
+        card.setStatus(BankEntityStatus.ACTIVE);
         cardRepository.put(card.getCardNumber(), card);
         bankAccount1.addCard(card);
 

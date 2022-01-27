@@ -28,7 +28,7 @@
             <input type="number" class="form-control" id="pin2">
         </div>
         <br>
-        <input type="button" class="btn btn-primary" id="submit" value="Activate">
+        <input type="button" class="btn btn-primary" id="activation" value="Activate">
     </div>
 </div>
 <div id="verify">
@@ -41,7 +41,7 @@
     let cardNumber = document.getElementById("cardId").textContent;
     let pin1 = document.getElementById("pin1");
     let pin2 = document.getElementById("pin2");
-    let submit = document.getElementById("submit");
+    let submit = document.getElementById("activation");
     let verify = document.getElementById("verify");
     let verifyCode = document.getElementById("verifyCode");
     let submitVerification = document.getElementById("submitVerification");
@@ -70,6 +70,21 @@
         xhttp.open("POST", "/api/user/card", true);
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(JSON.stringify({"cardNumber":cardNumber, "pin":pin1.value}));
+    });
+
+    submitVerification.addEventListener('click', () => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            let json = JSON.parse(this.responseText)
+            console.log(json);
+            if(json['verified'] === "true") {
+                window.location = "/client/home";
+            }
+        }
+        xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        console.log(JSON.stringify({code:verifyCode.value}))
+        xhttp.send(JSON.stringify({code:verifyCode.value}));
     });
 
 </script>
