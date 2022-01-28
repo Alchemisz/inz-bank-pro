@@ -8,16 +8,14 @@ import com.example.demo.verification.verificator.AbstractVerificator;
 import com.example.demo.verification.verificator.VerificationType;
 import com.example.demo.verification.verificator.VerificatorAbstractFactory;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/card")
 public class CardRestController {
 
     private final CardService cardService;
@@ -30,7 +28,7 @@ public class CardRestController {
         this.verificatorAbstractFactory = verificatorAbstractFactory;
     }
 
-    @PostMapping("/card")
+    @PostMapping("")
     public Map<String, String> cardActivationVerification(@RequestBody JsonNode payload){
         String cardNumber = payload.get("cardNumber").toString().replace("\"", "");
         Integer pin = payload.get("pin").asInt();
@@ -40,6 +38,16 @@ public class CardRestController {
         String id = activateCardVerificator.startVerification(activateCardRequest);
         Map<String, String> response = new HashMap<>();
         response.put("requestId", id);
+        return response;
+    }
+
+    @PutMapping
+    public Map<String, String> setNewPIN(@RequestBody JsonNode payload){
+        String cardNumber = payload.get("cardNumber").toString().replace("\"", "");;
+        Integer passedPIN = payload.get("passedPIN").asInt();
+        Integer newPIN = payload.get("newPIN").asInt();
+        Map<String, String> response = new HashMap<>();
+        response.put("response", (cardService.trySetNewPIN(cardNumber, passedPIN, newPIN) ? HttpStatus.OK.toString() : HttpStatus.BAD_REQUEST.toString()));
         return response;
     }
 

@@ -47,4 +47,15 @@ public class CardServiceImpl implements CardService{
         card.setStatus(BankEntityStatus.ACTIVE);
         //TODO UPDATE W BAZIE
     }
+
+    @Override
+    public boolean trySetNewPIN(String cardId, Integer passedPin, Integer newPin) {
+        Card card = cardRepository.getCard(cardId);
+        if (card.getPIN().equals(passedPin)){
+            card.setPIN(newPin);
+            //TODO UPDATE W BAZIE
+            return true;
+        }
+        return false;
+    }
 }

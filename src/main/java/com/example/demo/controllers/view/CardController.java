@@ -18,11 +18,17 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @GetMapping
+    @GetMapping("/activation")
     public String getActivationPage(@RequestParam("cardNumber") String cardNumber, Model model){
         Card cardToActivation = cardService.getCard(cardNumber);
         model.addAttribute("card", cardToActivation);
         return "/client/cardActivation";
     }
 
+    @GetMapping("/updateCard")
+    public String getSetNewPinPage(@RequestParam("cardNumber") String cardNumber, Model model){
+        Card cardToActivation = cardService.getCard(cardNumber);
+        model.addAttribute("card", cardToActivation);
+        return "/client/cardSetNewPIN";
+    }
 }

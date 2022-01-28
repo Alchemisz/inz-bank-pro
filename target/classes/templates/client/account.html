@@ -53,8 +53,14 @@
                 <td>
 <!--                    Activate Card Operation-->
                     <th:block th:if="${card.status.typeName == 'Inactive'}">
-                        <a th:href="@{/client/card(cardNumber=${card.cardNumber})}">
+                        <a th:href="@{/client/card/activation(cardNumber=${card.cardNumber})}">
                             <input type="button" class="btn btn-outline-success" value="Activate"/>
+                        </a>
+                    </th:block>
+                    <th:block th:if="${card.status.typeName == 'Active'}">
+                        <input type="button" class="btn btn-outline-danger" id="block" value="Block">
+                        <a th:href="@{/client/card/updateCard(cardNumber=${card.cardNumber})}">
+                            <input type="button" class="btn btn-outline-primary" id="newPin" value="Set New PIN">
                         </a>
                     </th:block>
                 </td>

@@ -8,4 +8,5 @@ public interface CardService {
     boolean isCardNumberExists(String cardNumber);
     Card getCard(String cardNumber);
     void activateCard(Card card);
+    boolean trySetNewPIN(String cardId, Integer passedPin, Integer newPin);
 }
