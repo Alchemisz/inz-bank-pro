@@ -41,13 +41,24 @@ public class CardRestController {
         return response;
     }
 
-    @PutMapping
+    @PutMapping("/setNewPin")
     public Map<String, String> setNewPIN(@RequestBody JsonNode payload){
-        String cardNumber = payload.get("cardNumber").toString().replace("\"", "");;
+        String cardNumber = payload.get("cardNumber").toString().replace("\"", "");
         Integer passedPIN = payload.get("passedPIN").asInt();
         Integer newPIN = payload.get("newPIN").asInt();
         Map<String, String> response = new HashMap<>();
         response.put("response", (cardService.trySetNewPIN(cardNumber, passedPIN, newPIN) ? HttpStatus.OK.toString() : HttpStatus.BAD_REQUEST.toString()));
+        return response;
+    }
+
+    @PutMapping("/block")
+    public Map<String, String> block(@RequestBody JsonNode payload){
+        String cardNumber = payload.get("cardNumber").toString().replace("\"", "");
+        RequestOrder blockCardRequest = requestFactory.createBlockCardRequest(cardService, cardNumber);
+        AbstractVerificator blockCardVerificator = verificatorAbstractFactory.getBlockCardVerificator(VerificationType.EMAIL);
+        String id = blockCardVerificator.startVerification(blockCardRequest);
+        Map<String, String> response = new HashMap<>();
+        response.put("requestId", id);
         return response;
     }
 

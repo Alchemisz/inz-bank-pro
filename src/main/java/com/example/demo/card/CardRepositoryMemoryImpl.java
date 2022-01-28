@@ -50,4 +50,9 @@ public class CardRepositoryMemoryImpl implements CardRepository{
     public void deleteCard(Card card) {
         cardRepository.remove(card.getCardNumber());
     }
+
+    @Override
+    public void update(Card card) {
+        cardRepository.put(card.getCardNumber(), card);
+    }
 }

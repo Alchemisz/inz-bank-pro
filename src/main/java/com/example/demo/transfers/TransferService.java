@@ -1,9 +1,7 @@
 package com.example.demo.transfers;
 
 import com.example.demo.bankAccount.BankAccount;
-import com.example.demo.bankAccount.BankAccountRepository;
 import com.example.demo.bankAccount.BankAccountService;
-import com.example.demo.card.CardService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,10 +10,10 @@ import java.util.List;
 @Service
 public class TransferService {
     TransferRepository transferRepository;
-    CardService cardService;
+    com.example.demo.card.CardService cardService;
     BankAccountService bankAccountService;
 
-    public TransferService(TransferRepository transferRepository, CardService cardService, BankAccountService bankAccountService) {
+    public TransferService(TransferRepository transferRepository, com.example.demo.card.CardService cardService, BankAccountService bankAccountService) {
         this.transferRepository = transferRepository;
         this.cardService = cardService;
         this.bankAccountService = bankAccountService;

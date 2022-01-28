@@ -14,6 +14,7 @@
 <body>
 <div class="container">
     <div>
+        <input type="hidden" th:value="${accountNumberSession.value}" id="hiddenAccountNumber">
         <br>
         <div class="form-group" id="cardNumber">
             <b>Card number: </b><span th:text="${card.cardNumber}" id="cardId"></span>
@@ -45,6 +46,7 @@
     let verify = document.getElementById("verify");
     let verifyCode = document.getElementById("verifyCode");
     let submitVerification = document.getElementById("submitVerification");
+    let handledAccountNumber = document.getElementById("hiddenAccountNumber").value;
 
     submit.addEventListener('click', () => {
         if (!(pin1.value.length >= 4 && pin1.value.length <= 8)){
@@ -78,7 +80,7 @@
             let json = JSON.parse(this.responseText)
             console.log(json);
             if(json['verified'] === "true") {
-                window.location = "/client/home";
+                window.location = "/client/account?accountNumber="+handledAccountNumber;
             }
         }
         xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);

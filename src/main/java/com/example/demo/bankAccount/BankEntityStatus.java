@@ -1,5 +1,6 @@
 package com.example.demo.bankAccount;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter

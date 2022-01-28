@@ -24,7 +24,9 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public void blockCard(String cardNumber) {
-
+        Card card = getCard(cardNumber);
+        card.setStatus(BankEntityStatus.BLOCKED);
+        cardRepository.update(card);
     }
 
     @Override
