@@ -62,13 +62,14 @@
     </div>
 </div>
 </body>
+<script th:src="@{/js/verificationProcess.js}"></script>
 <script>
     var submit = document.getElementById("submit");
     var verify = document.getElementById("verify");
     var verifyCode = document.getElementById("verifyCode");
     var submitVerification = document.getElementById("submitVerification");
 
-    var loginRequestId = -1;
+    var requestId = -1;
 
     submit.addEventListener('click', () => {
         const xhttp = new XMLHttpRequest();
@@ -76,7 +77,7 @@
         xhttp.onload = function() {
             var json = JSON.parse(this.responseText)
             if(json['requestId']) {
-                loginRequestId = json['requestId'];
+                requestId = json['requestId'];
                 verify.style.display = 'block';
             } else {
                 console.log(json['errorMsg']);
@@ -87,21 +88,8 @@
         xhttp.send();
     });
 
-    submitVerification.addEventListener('click', () => {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function() {
-            let json = JSON.parse(this.responseText)
-            console.log(json);
-            if(json['verified'] == "true") {
-                window.location = "/client/home";
-            }
-        }
-        xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);
-        xhttp.setRequestHeader("Content-Type", "application/json");
-        console.log(JSON.stringify({code:verifyCode.value}))
-        xhttp.send(JSON.stringify({code:verifyCode.value}));
-    });
-
+    submitVerification.addEventListener('click', () =>
+        verificationProcess(verifyCode.value, requestId, "/client/home"));
 
     //Listeners for block account buttons
     const table = document.getElementById("accountsTable");
@@ -118,7 +106,7 @@
                 console.log(this.responseText);
                 let json = JSON.parse(this.responseText);
                 if (json["requestId"]){
-                    loginRequestId = json['requestId'];
+                    requestId = json['requestId'];
                     verify.style.display = 'block';
                 }else{
                     console.log("Error block button!");

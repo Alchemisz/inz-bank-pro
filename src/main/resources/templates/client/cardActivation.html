@@ -63,7 +63,7 @@
         xhttp.onload = function() {
             var json = JSON.parse(this.responseText)
             if(json['requestId']) {
-                loginRequestId = json['requestId'];
+                requestId = json['requestId'];
                 verify.style.display = 'block';
             } else {
                 console.log(json['errorMsg']);
@@ -83,7 +83,7 @@
                 window.location = "/client/account?accountNumber="+handledAccountNumber;
             }
         }
-        xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);
+        xhttp.open("PUT", "/verification/verify/" + requestId, true);
         xhttp.setRequestHeader("Content-Type", "application/json");
         console.log(JSON.stringify({code:verifyCode.value}))
         xhttp.send(JSON.stringify({code:verifyCode.value}));
