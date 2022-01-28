@@ -1,7 +1,9 @@
 package com.example.demo.card;
 
+import com.example.demo.bankAccount.BankAccount;
+
 public interface CardService {
-    void registerCard(Card card);
+    void registerCard(String accounNumber);
     void unregisterCard(String cardNumber);
     void blockCard(String cardNumber);
     void unblockCard(String cardNumber);

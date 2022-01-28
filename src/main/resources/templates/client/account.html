@@ -70,6 +70,10 @@
     </th:block>
 
     <br>
+    <div>
+        <button id="submit" class="btn btn-primary">Create new card</button>
+    </div>
+    <br>
     <br>
 <!--    Transfers-->
     <th:block th:if="${not #lists.isEmpty(assignedTransfers)}">
@@ -107,7 +111,8 @@
             </tbody>
         </table>
     </th:block>
-
+    <br>
+    <br>
     <div id="verify">
         <div>
             <input id="verifyCode" />
@@ -122,9 +127,26 @@
     let verify = document.getElementById("verify");
     let verifyCode = document.getElementById("verifyCode");
     let submitVerification = document.getElementById("submitVerification");
-    let accountNUmber = document.getElementById("accountNumber").innerHTML;
+    let accountNumber = document.getElementById("accountNumber").innerText;
 
     let loginRequestId = -1;
+
+    submit.addEventListener('click', () => {
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.onload = function() {
+            var json = JSON.parse(this.responseText)
+            if(json['requestId']) {
+                loginRequestId = json['requestId'];
+                verify.style.display = 'block';
+            } else {
+                console.log(json['errorMsg']);
+            }
+        }
+        xhttp.open("POST", "/api/user/card/create", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify({"accountNumber":accountNumber}));
+    });
 
     submitVerification.addEventListener('click', () => {
         const xhttp = new XMLHttpRequest();
@@ -132,7 +154,7 @@
             let json = JSON.parse(this.responseText)
             console.log(json);
             if(json['verified'] == "true") {
-                window.location = "/client/account?accountNumber="+accountNUmber;
+                window.location = "/client/account?accountNumber="+accountNumber;
             }
         }
         xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);

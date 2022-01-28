@@ -1,20 +1,19 @@
 package com.example.demo.request;
 
 import com.example.demo.card.CardService;
-import com.example.demo.user.User;
 
 public class CreateCardRequest implements RequestOrder {
 
     private CardService cardService;
-    private User user;
+    private String accountNumber;
 
-    public CreateCardRequest(CardService cardService, User user) {
+    public CreateCardRequest(CardService cardService, String bankAccount) {
         this.cardService = cardService;
-        this.user = user;
+        this.accountNumber = bankAccount;
     }
 
     @Override
     public void execute() {
-
+        cardService.registerCard(accountNumber);
     }
 }

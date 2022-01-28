@@ -1,5 +1,7 @@
 package com.example.demo.card;
 
+import com.example.demo.bankAccount.BankAccount;
+import com.example.demo.bankAccount.BankAccountRepository;
 import com.example.demo.bankAccount.BankEntityStatus;
 import org.springframework.stereotype.Service;
 
@@ -7,14 +9,20 @@ import org.springframework.stereotype.Service;
 public class CardServiceImpl implements CardService{
 
     private CardRepository cardRepository;
+    private BankAccountRepository bankAccountRepository;
 
-    public CardServiceImpl(CardRepository cardRepository) {
+    public CardServiceImpl(CardRepository cardRepository, BankAccountRepository bankAccountRepository) {
         this.cardRepository = cardRepository;
+        this.bankAccountRepository = bankAccountRepository;
     }
 
     @Override
-    public void registerCard(Card card) {
-
+    public void registerCard(String accountNumber) {
+        BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
+//        TODO generatorek kart
+        Card card = new Card("6655", 1234, bankAccount);
+        bankAccount.addCard(card);
+        cardRepository.addCard(card);
     }
 
     @Override

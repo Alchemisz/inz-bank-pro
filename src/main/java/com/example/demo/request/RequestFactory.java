@@ -3,6 +3,7 @@ package com.example.demo.request;
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountService;
 import com.example.demo.card.Card;
+import com.example.demo.card.CardService;
 import com.example.demo.transfers.Transfer;
 import com.example.demo.transfers.TransferService;
 import com.example.demo.user.User;
@@ -20,8 +21,8 @@ public class RequestFactory {
         return new TransferRequest(transfer, transferService);
     }
 
-    public RequestOrder createCreateCardRequest(User user, com.example.demo.card.CardService cardService) {
-        return new CreateCardRequest(cardService, user);
+    public RequestOrder createCreateCardRequest(CardService cardService, String bankAccount) {
+        return new CreateCardRequest(cardService, bankAccount);
     }
 
     public RequestOrder createBankAccountRequest(BankAccount bankAccount, User user, BankAccountService bankAccountService){

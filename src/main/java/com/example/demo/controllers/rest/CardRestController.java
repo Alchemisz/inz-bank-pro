@@ -28,7 +28,18 @@ public class CardRestController {
         this.verificatorAbstractFactory = verificatorAbstractFactory;
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
+    public Map<String, String> createCard(@RequestBody JsonNode payload){
+        String accountNumber = payload.get("accountNumber").toString().replace("\"", "");
+        RequestOrder createCardRequest = requestFactory.createCreateCardRequest(cardService, accountNumber);
+        AbstractVerificator createCardVerificator = verificatorAbstractFactory.getCreateCardVerificator(VerificationType.EMAIL);
+        String id = createCardVerificator.startVerification(createCardRequest);
+        Map<String, String> response = new HashMap<>();
+        response.put("requestId", id);
+        return response;
+    }
+
+    @PutMapping("/activate")
     public Map<String, String> cardActivationVerification(@RequestBody JsonNode payload){
         String cardNumber = payload.get("cardNumber").toString().replace("\"", "");
         Integer pin = payload.get("pin").asInt();

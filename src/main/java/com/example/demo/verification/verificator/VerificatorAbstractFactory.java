@@ -31,4 +31,7 @@ public class VerificatorAbstractFactory {
     public AbstractVerificator getBlockCardVerificator(VerificationType type) {
         return new ActivateCardVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
     }
+    public AbstractVerificator getCreateCardVerificator(VerificationType type) {
+        return new ActivateCardVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
+    }
 }
