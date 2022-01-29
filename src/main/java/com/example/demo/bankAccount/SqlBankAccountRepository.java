@@ -1,7 +1,9 @@
 package com.example.demo.bankAccount;
 
 import com.example.demo.card.Card;
+import com.example.demo.security.priviledges.UserPriviledges;
 import com.example.demo.transfers.Transfer;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +44,8 @@ public class SqlBankAccountRepository implements BankAccountRepository{
                 bankAccount.setStatus(BankEntityStatus.valueOf(resultSet.getString("status").toUpperCase(Locale.ROOT)));
                 bankAccount.setBalance(BigDecimal.valueOf(Double.parseDouble(resultSet.getString("balance"))));
                 bankAccount.setCurrency(resultSet.getString("currency"));
-                bankAccount.setUser(userRepository.getUser(resultSet.getString("login")));
+                //bankAccount.setUser(userRepository.getUser(resultSet.getString("login")));
+                bankAccount.setUser(new User(resultSet.getString("login"), "", UserPriviledges.getNoPriviledges()));
 
                 bankAccount.setCardList(new ArrayList<>());
                 PreparedStatement preparedStatement2 = comm.prepareStatement("SELECT  * FROM Card where accountNumber = ?");
@@ -112,7 +115,8 @@ public class SqlBankAccountRepository implements BankAccountRepository{
                 bankAccount.setStatus(BankEntityStatus.valueOf(resultSet.getString("status").toUpperCase(Locale.ROOT)));
                 bankAccount.setBalance(BigDecimal.valueOf(Double.parseDouble(resultSet.getString("balance"))));
                 bankAccount.setCurrency(resultSet.getString("currency"));
-                bankAccount.setUser(userRepository.getUser(resultSet.getString("login")));
+                //bankAccount.setUser(userRepository.getUser(resultSet.getString("login")));
+                bankAccount.setUser(new User(resultSet.getString("login"), "", UserPriviledges.getNoPriviledges()));
 
                 bankAccount.setCardList(new ArrayList<>());
                 PreparedStatement preparedStatement2 = comm.prepareStatement("SELECT  * FROM Card where accountNumber = ?");
@@ -154,7 +158,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
             preparedStatement.setString(2, String.valueOf(bankAccount.getBalance()));
             preparedStatement.setString(3, bankAccount.getCurrency());
             preparedStatement.setString(4, bankAccount.getUser().getLogin());
-            preparedStatement.setString(5,bankAccount.getAccountNumber());
+            preparedStatement.setString(5, bankAccount.getAccountNumber());
 
             preparedStatement.executeUpdate();
 

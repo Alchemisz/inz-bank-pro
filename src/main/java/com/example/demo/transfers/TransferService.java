@@ -44,8 +44,8 @@ public class TransferService {
             sender.setBalance(newSenderBalance);
             reciever.setBalance(newRecieverBalance);
 
-            bankAccountService.update(sender);
-            bankAccountService.update(reciever);
+
+
 
         } else {
             System.out.println("odbiorca zewnętrzny");

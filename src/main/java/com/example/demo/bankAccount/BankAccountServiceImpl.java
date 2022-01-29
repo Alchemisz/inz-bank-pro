@@ -22,6 +22,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public void registerBankAccount(BankAccount bankAccount) {
+
         bankAccountRepository.register(bankAccount);
     }
 
