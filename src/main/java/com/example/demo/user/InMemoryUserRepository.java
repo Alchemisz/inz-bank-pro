@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Repository
+
 public class InMemoryUserRepository implements UserRepository {
     private Map<String, User> users;
 

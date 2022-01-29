@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class BankAccount {
-
+    private int id;
     private String accountNumber;
     private BankEntityStatus status;
     private BigDecimal balance;
