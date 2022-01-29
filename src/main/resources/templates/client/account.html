@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Accounts</title>
+    <title>Account Details</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <link th:href="@{/css/verification.css}" rel="stylesheet" />
 
 </head>
 <body>
@@ -21,7 +21,7 @@
         <input type="button" class="btn btn-outline-dark" value="Currency convertion">
     </a>
     <hr>
-    <p><b>Account number: </b><span th:text="${account.accountNumber}"></span></p>
+    <p><b>Account number: </b><span th:id="accountNumber" th:text="${account.accountNumber}"></span></p>
     <p><b>Balance: </b><span th:text="${#numbers.formatDecimal(account.balance, 1, 2)} + ' ' + ${account.currency}"></span></p>
     <br>
     <div>
@@ -30,6 +30,52 @@
         </a>
     </div>
     <hr>
+
+<!--    Cards connected to account-->
+    <th:block th:if="${not #lists.isEmpty(account.cardList)}">
+
+        <h2 class="text-center">Cards connected to this account:</h2>
+        <br>
+        <table id="cardsTable" class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Card Number</th>
+                <th>PIN</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="card : ${account.cardList}" class="card-row" th:id="${card.cardNumber}">
+                <td th:text="${card.cardNumber}"></td>
+                <td th:text="${card.PIN}"></td>
+                <td th:text="${card.status.typeName}"></td>
+                <td>
+<!--                    Activate Card Operation-->
+                    <th:block th:if="${card.status.typeName == 'Inactive'}">
+                        <a th:href="@{/client/card/activation(cardNumber=${card.cardNumber})}">
+                            <input type="button" class="btn btn-outline-success" value="Activate"/>
+                        </a>
+                    </th:block>
+                    <th:block th:if="${card.status.typeName == 'Active'}">
+                        <input type="button" class="btn btn-outline-danger" id="block" value="Block">
+                        <a th:href="@{/client/card/updateCard(cardNumber=${card.cardNumber})}">
+                            <input type="button" class="btn btn-outline-primary" id="newPin" value="Set New PIN">
+                        </a>
+                    </th:block>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <br>
+    <div>
+        <button id="submit" class="btn btn-primary">Create new card</button>
+    </div>
+    <br>
+    <br>
+<!--    Transfers-->
     <th:block th:if="${not #lists.isEmpty(assignedTransfers)}">
 
         <h2 class="text-center">Transfers History</h2>
@@ -65,6 +111,84 @@
             </tbody>
         </table>
     </th:block>
+    <br>
+    <br>
+    <div id="verify">
+        <div>
+            <input id="verifyCode" />
+            <button id="submitVerification" class="btn btn-light" >Potwierdź</button>
+        </div>
+    </div>
+
 </div>
 </body>
+<script>
+    let submit = document.getElementById("submit");
+    let verify = document.getElementById("verify");
+    let verifyCode = document.getElementById("verifyCode");
+    let submitVerification = document.getElementById("submitVerification");
+    let accountNumber = document.getElementById("accountNumber").innerText;
+
+    let loginRequestId = -1;
+
+    submit.addEventListener('click', () => {
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.onload = function() {
+            var json = JSON.parse(this.responseText)
+            if(json['requestId']) {
+                loginRequestId = json['requestId'];
+                verify.style.display = 'block';
+            } else {
+                console.log(json['errorMsg']);
+            }
+        }
+        xhttp.open("POST", "/api/user/card/create", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify({"accountNumber":accountNumber}));
+    });
+
+    submitVerification.addEventListener('click', () => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            let json = JSON.parse(this.responseText)
+            console.log(json);
+            if(json['verified'] == "true") {
+                window.location = "/client/account?accountNumber="+accountNumber;
+            }
+        }
+        xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        console.log(JSON.stringify({code:verifyCode.value}))
+        xhttp.send(JSON.stringify({code:verifyCode.value}));
+    });
+
+    //Listeners for block card buttons
+    const table = document.getElementById("cardsTable");
+    const rows = table.getElementsByClassName("card-row");
+
+    Array.from(rows).forEach( e => {
+        const cardNumber = e.getAttribute("id");
+        const buttons = e.getElementsByTagName("input");
+        const blockButton = Array.from(buttons).find(e => e.getAttribute("value") === "Block");
+
+        blockButton.addEventListener('click', () => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                console.log(this.responseText);
+                let json = JSON.parse(this.responseText);
+                if (json["requestId"]){
+                    loginRequestId = json['requestId'];
+                    verify.style.display = 'block';
+                }else{
+                    console.log("Error block button!");
+                }
+            };
+            xhttp.open("PUT", "/api/user/card/block", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(JSON.stringify({"cardNumber":cardNumber}));
+        });
+    })
+
+</script>
 </html>

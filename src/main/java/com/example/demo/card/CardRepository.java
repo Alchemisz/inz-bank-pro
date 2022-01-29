@@ -6,4 +6,5 @@ public interface CardRepository {
     void addCard(Card card);
     void deleteCard(Card card);
 
+    void update(Card card);
 }

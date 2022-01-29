@@ -1,11 +1,13 @@
 package com.example.demo.bankAccount;
 
-import lombok.AllArgsConstructor;
+import com.example.demo.card.Card;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -13,14 +15,20 @@ import java.math.BigDecimal;
 public class BankAccount {
 
     private String accountNumber;
-    private BankAccountStatus status;
+    private BankEntityStatus status;
     private BigDecimal balance;
     private String currency;
+    private List<Card> cardList;
 
-    public BankAccount(String accountNumber, BankAccountStatus status, BigDecimal balance, String currency) {
+    public BankAccount(String accountNumber, BankEntityStatus status, BigDecimal balance, String currency) {
         this.accountNumber = accountNumber;
         this.status = status;
         this.balance = balance;
         this.currency = currency;
+        this.cardList = new ArrayList<>();
+    }
+
+    public void addCard(Card card){
+        cardList.add(card);
     }
 }

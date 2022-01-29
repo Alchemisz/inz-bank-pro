@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Card Activation</title>
+
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link th:href="@{/css/verification.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div>
+        <input type="hidden" th:value="${accountNumberSession.value}" id="hiddenAccountNumber">
+        <br>
+        <div class="form-group" id="cardNumber">
+            <b>Card number: </b><span th:text="${card.cardNumber}" id="cardId"></span>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="pin1">Enter new PIN: (should be between 4 and 8 digits)</label>
+            <input type="number" class="form-control" id="pin1">
+        </div>
+        <div class="form-group">
+            <label for="pin2">Confirm PIN:</label>
+            <input type="number" class="form-control" id="pin2">
+        </div>
+        <br>
+        <input type="button" class="btn btn-primary" id="activation" value="Activate">
+    </div>
+</div>
+<div id="verify">
+    <div>
+        <input id="verifyCode" />
+        <button id="submitVerification" class="btn btn-light" >Potwierdź</button>
+    </div>
+</div>
+<script>
+    let cardNumber = document.getElementById("cardId").textContent;
+    let pin1 = document.getElementById("pin1");
+    let pin2 = document.getElementById("pin2");
+    let submit = document.getElementById("activation");
+    let verify = document.getElementById("verify");
+    let verifyCode = document.getElementById("verifyCode");
+    let submitVerification = document.getElementById("submitVerification");
+    let handledAccountNumber = document.getElementById("hiddenAccountNumber").value;
+
+    submit.addEventListener('click', () => {
+        if (!(pin1.value.length >= 4 && pin1.value.length <= 8)){
+            alert("Please enter only digits in range between 4 and 8!")
+            return;
+        }
+        if(pin1.value !== pin2.value){
+            alert("Enter same PIN codes!")
+            return;
+        }
+
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.onload = function() {
+            var json = JSON.parse(this.responseText)
+            if(json['requestId']) {
+                requestId = json['requestId'];
+                verify.style.display = 'block';
+            } else {
+                console.log(json['errorMsg']);
+            }
+        }
+        xhttp.open("PUT", "/api/user/card/activate", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify({"cardNumber":cardNumber, "pin":pin1.value}));
+    });
+
+    submitVerification.addEventListener('click', () => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            let json = JSON.parse(this.responseText)
+            console.log(json);
+            if(json['verified'] === "true") {
+                window.location = "/client/account?accountNumber="+handledAccountNumber;
+            }
+        }
+        xhttp.open("PUT", "/verification/verify/" + requestId, true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        console.log(JSON.stringify({code:verifyCode.value}))
+        xhttp.send(JSON.stringify({code:verifyCode.value}));
+    });
+
+</script>
+
+
+</body>
+</html>

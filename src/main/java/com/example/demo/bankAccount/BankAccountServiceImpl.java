@@ -1,6 +1,5 @@
 package com.example.demo.bankAccount;
 
-import org.springframework.cglib.core.Block;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -8,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BankAccountServiceImpl implements BankAccountService{
+public class BankAccountServiceImpl implements BankAccountService {
 
     private final BankAccountRepository bankAccountRepository;
 
@@ -37,7 +36,7 @@ public class BankAccountServiceImpl implements BankAccountService{
     }
 
     @Override
-    public List<BankAccount> getBankAccounts(BankAccountStatus... status) {
+    public List<BankAccount> getBankAccounts(BankEntityStatus... status) {
         return bankAccountRepository.getBankAccounts()
                 .stream()
                 .filter(e -> Arrays.stream(status).map(s -> s.equals(e.getStatus())).reduce((a, b) -> (a || b)).get())
@@ -51,7 +50,7 @@ public class BankAccountServiceImpl implements BankAccountService{
 
     @Override
     public void blockAccount(String accountNumber) {
-        bankAccountRepository.getBankAccount(accountNumber).setStatus(BankAccountStatus.BLOCKED);
+        bankAccountRepository.getBankAccount(accountNumber).setStatus(BankEntityStatus.BLOCKED);
         bankAccountRepository.update(bankAccountRepository.getBankAccount(accountNumber));
     }
 }

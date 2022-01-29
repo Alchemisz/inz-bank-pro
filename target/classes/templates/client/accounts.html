@@ -22,7 +22,7 @@
     <h3>Account's List</h3>
     <hr>
 
-    <table class="table table-bordered table-striped">
+    <table id="accountsTable" class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
             <th>Account Number</th>
@@ -33,11 +33,20 @@
         </thead>
 
         <tbody>
-            <tr th:each="account : ${userAccounts}">
+            <tr th:each="account : ${userAccounts}" th:id="${account.accountNumber}" class="account-row">
                 <td th:text="${account.accountNumber}"></td>
                 <td th:text="${account.status.typeName}"></td>
                 <td th:text="${#numbers.formatDecimal(account.balance, 1, 2)} + ' ' + ${account.currency}"></td>
-                <td><a th:href="@{/client/account(accountNumber=${account.accountNumber})}"><input type="button" class="btn btn-outline-dark" value="Show Details"/></a></td>
+                <td>
+<!--                    Show details button-->
+                    <a th:href="@{/client/account(accountNumber=${account.accountNumber})}">
+                        <input type="button" class="btn btn-outline-dark" value="Show Details"/>
+                    </a>
+<!--                    Block account button-->
+                    <th:block th:if="${account.status.typeName == 'Active'}">
+                        <a><input type="button" class="btn btn-outline-danger" value="Block"/></a>
+                    </th:block>
+                </td>
             </tr>
         </tbody>
 
@@ -53,13 +62,14 @@
     </div>
 </div>
 </body>
+<script th:src="@{/js/verificationProcess.js}"></script>
 <script>
     var submit = document.getElementById("submit");
     var verify = document.getElementById("verify");
     var verifyCode = document.getElementById("verifyCode");
     var submitVerification = document.getElementById("submitVerification");
 
-    var loginRequestId = -1;
+    var requestId = -1;
 
     submit.addEventListener('click', () => {
         const xhttp = new XMLHttpRequest();
@@ -67,7 +77,7 @@
         xhttp.onload = function() {
             var json = JSON.parse(this.responseText)
             if(json['requestId']) {
-                loginRequestId = json['requestId'];
+                requestId = json['requestId'];
                 verify.style.display = 'block';
             } else {
                 console.log(json['errorMsg']);
@@ -78,19 +88,34 @@
         xhttp.send();
     });
 
-    submitVerification.addEventListener('click', () => {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function() {
-            let json = JSON.parse(this.responseText)
-            console.log(json);
-            if(json['verified'] == "true") {
-                window.location = "/client/home";
-            }
-        }
-        xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);
-        xhttp.setRequestHeader("Content-Type", "application/json");
-        console.log(JSON.stringify({code:verifyCode.value}))
-        xhttp.send(JSON.stringify({code:verifyCode.value}));
-    });
+    submitVerification.addEventListener('click', () =>
+        verificationProcess(verifyCode.value, requestId, "/client/home"));
+
+    //Listeners for block account buttons
+    const table = document.getElementById("accountsTable");
+    const rows = table.getElementsByClassName("account-row");
+
+    Array.from(rows).forEach( e => {
+        const accountNumber = e.getAttribute("id");
+        const buttons = e.getElementsByTagName("input");
+        const blockButton = Array.from(buttons).find(e => e.getAttribute("value") === "Block");
+
+        blockButton.addEventListener('click', () => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                console.log(this.responseText);
+                let json = JSON.parse(this.responseText);
+                if (json["requestId"]){
+                    requestId = json['requestId'];
+                    verify.style.display = 'block';
+                }else{
+                    console.log("Error block button!");
+                }
+            };
+            xhttp.open("POST", "/api/user/accounts/block", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(JSON.stringify({"accountNumber":accountNumber}));
+        });
+    })
 </script>
 </html>

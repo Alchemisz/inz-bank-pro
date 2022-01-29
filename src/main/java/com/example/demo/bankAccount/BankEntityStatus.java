@@ -1,18 +1,17 @@
 package com.example.demo.bankAccount;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
-public enum BankAccountStatus {
+public enum BankEntityStatus {
     BLOCKED("Blocked"),
     ACTIVE("Active"),
     INACTIVE("Inactive");
 
     private String typeName;
 
-    BankAccountStatus(String typeName) {
+    BankEntityStatus(String typeName) {
         this.typeName = typeName;
     }
 }

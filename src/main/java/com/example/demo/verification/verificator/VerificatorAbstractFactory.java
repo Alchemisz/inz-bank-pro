@@ -23,7 +23,15 @@ public class VerificatorAbstractFactory {
         return new CreateBankAccountVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
     }
     public AbstractVerificator getBlockBankAccountVerificator(VerificationType type) {
-        return new BloackBankAccountVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
+        return new BlockBankAccountVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
     }
-
+    public AbstractVerificator getActivateCardVerificator(VerificationType type) {
+        return new ActivateCardVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
+    }
+    public AbstractVerificator getBlockCardVerificator(VerificationType type) {
+        return new ActivateCardVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
+    }
+    public AbstractVerificator getCreateCardVerificator(VerificationType type) {
+        return new ActivateCardVerificator(verificationStrategyFactory.getDesiredStrategy(type), verificationService);
+    }
 }
