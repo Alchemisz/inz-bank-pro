@@ -40,13 +40,13 @@ public class SqlCardRepository implements CardRepository{
                         BankEntityStatus.valueOf(resultSet.getString("status").toUpperCase(Locale.ROOT)),
                         bankAccountRepository.getBankAccount(resultSet.getString("accountNumber")));
             }
-
+            comm.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
-        return null;
+        return card;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class SqlCardRepository implements CardRepository{
 
 
             preparedStatement.execute();
-
+            comm.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class SqlCardRepository implements CardRepository{
             preparedStatement.setString(1, card.getCardNumber());
 
             preparedStatement.execute();
-
+            comm.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -93,13 +93,14 @@ public class SqlCardRepository implements CardRepository{
         try {
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("UPDATE Card set pin = ?, status = ?, accountNumber = ? where cardNumber = ? ");
+            System.out.println(String.valueOf(card.getPIN()));
             preparedStatement.setString(1, String.valueOf(card.getPIN()));
             preparedStatement.setString(2,String.valueOf(card.getStatus()));
             preparedStatement.setString(3, card.getBankAccount().getAccountNumber());
             preparedStatement.setString(4, card.getCardNumber());
 
             preparedStatement.executeUpdate();
-
+            comm.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

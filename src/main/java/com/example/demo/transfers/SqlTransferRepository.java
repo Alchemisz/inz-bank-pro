@@ -38,6 +38,7 @@ public class SqlTransferRepository implements TransferRepository{
                         transfer.setTransferDate(Date.valueOf(resultSet.getString("transferDate")));
 
             }
+            comm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -60,7 +61,7 @@ public class SqlTransferRepository implements TransferRepository{
             preparedStatement.setString(5, transfer.getTransferDate().toString());
 
             preparedStatement.execute();
-
+            comm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,7 +94,7 @@ public class SqlTransferRepository implements TransferRepository{
                         transfers.add(transfer);
 
             }
-
+            comm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

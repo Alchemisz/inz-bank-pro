@@ -56,7 +56,8 @@ public class CardServiceImpl implements CardService{
     @Override
     public void activateCard(Card card) {
         card.setStatus(BankEntityStatus.ACTIVE);
-        //TODO UPDATE W BAZIE
+        cardRepository.update(card);
+
     }
 
     @Override
@@ -64,7 +65,8 @@ public class CardServiceImpl implements CardService{
         Card card = cardRepository.getCard(cardId);
         if (card.getPIN().equals(passedPin)){
             card.setPIN(newPin);
-            //TODO UPDATE W BAZIE
+            cardRepository.update(card);
+
             return true;
         }
         return false;

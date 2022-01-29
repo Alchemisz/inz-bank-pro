@@ -1,6 +1,7 @@
 package com.example.demo.transfers;
 
 import com.example.demo.bankAccount.BankAccount;
+import com.example.demo.bankAccount.BankAccountRepository;
 import com.example.demo.bankAccount.BankAccountService;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,10 @@ public class TransferService {
             BigDecimal newSenderBalance = sender.getBalance().subtract(transfer.getAmount());
             sender.setBalance(newSenderBalance);
             reciever.setBalance(newRecieverBalance);
+
+            bankAccountService.update(sender);
+            bankAccountService.update(reciever);
+
         } else {
             System.out.println("odbiorca zewnętrzny");
         }

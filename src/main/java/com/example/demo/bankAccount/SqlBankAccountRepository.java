@@ -44,14 +44,29 @@ public class SqlBankAccountRepository implements BankAccountRepository{
                 bankAccount.setCurrency(resultSet.getString("currency"));
                 bankAccount.setUser(userRepository.getUser(resultSet.getString("login")));
 
-            }
+                bankAccount.setCardList(new ArrayList<>());
+                PreparedStatement preparedStatement2 = comm.prepareStatement("SELECT  * FROM Card where accountNumber = ?");
+                preparedStatement2.setString(1, bankAccount.getAccountNumber());
+                ResultSet resultSet2 = preparedStatement2.executeQuery();
 
+                while(resultSet2.next())
+                {
+                    Card card = new Card(resultSet2.getString("cardNumber"), Integer.parseInt(resultSet2.getString("pin")),
+                            BankEntityStatus.valueOf(resultSet2.getString("status").toUpperCase(Locale.ROOT)),
+                            bankAccount);
+
+                    bankAccount.getCardList().add(card);
+                }
+
+
+            }
+            comm.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
-        return null;
+        return bankAccount;
     }
 
     @Override
@@ -67,7 +82,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
             preparedStatement.setString(5, bankAccount.getUser().getLogin());
 
             preparedStatement.execute();
-
+            comm.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -83,7 +98,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
 
 
             Connection comm = dataSource.getConnection();
-            PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM BankAccout ");
+            PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM BankAccount ");
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -101,7 +116,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
 
                 bankAccount.setCardList(new ArrayList<>());
                 PreparedStatement preparedStatement2 = comm.prepareStatement("SELECT  * FROM Card where accountNumber = ?");
-
+                preparedStatement2.setString(1, bankAccount.getAccountNumber());
                 ResultSet resultSet2 = preparedStatement2.executeQuery();
 
                 while(resultSet2.next())
@@ -115,7 +130,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
 
                 bankAccounts.add(bankAccount);
             }
-
+            comm.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -131,7 +146,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
 
         try {
             Connection comm = dataSource.getConnection();
-            PreparedStatement preparedStatement = comm.prepareStatement("UPDATE BankAccount set status = ?, set balance = ? set currency = ?, set login = ? where accountNumber = ?");
+            PreparedStatement preparedStatement = comm.prepareStatement("UPDATE BankAccount set status = ?, balance = ?,  currency = ?,  login = ? where accountNumber = ?");
 
 
 
@@ -144,7 +159,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
             preparedStatement.executeUpdate();
 
 
-
+            comm.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
