@@ -1,1 +1,1 @@
-INSERT INTO User values ('admin', 'passwd', 'admin');
+INSERT INTO TUser values ('test', '$2a$05$ynyRtBpbxJjY34npocXsEeons.EHdWSEMAz7HVmoZXdUd8dlfXvum', 'admin');

@@ -1,6 +1,7 @@
 package com.example.demo.user;
 
 
+import com.example.demo.security.priviledges.UserPriviledges;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -23,31 +24,32 @@ public class SqlUserRepository implements UserRepository {
 
     @Override
     public User getUser(String login) {
-
+        User user = new User();
+        user.setUserPriviledges(UserPriviledges.getNoPriviledges());
         try {
             Connection comm = dataSource.getConnection();
-            PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM TUser");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            int a = 2;
-           /* PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM TUser where login = ? ");
+            PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM TUser where login = ?");
             preparedStatement.setString(1,login);
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            User user = new User();
-            user.setLogin(resultSet.getString("login"));
-            user.setPass(resultSet.getString("tpass"));
 
-            System.out.println("Got user from sql : " + user.getLogin() + "  " + user.getPass());*/
-
-
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            if(resultSet.next()) {
+                user.setLogin(resultSet.getString("login"));
+                user.setPass(resultSet.getString("tpass"));
+                String role = resultSet.getString("trole");
+                if("admin".equals(role)) {
+                    user.setUserPriviledges(UserPriviledges.getAdminPriviledges());
+                } else if("employee".equals(role)) {
+                    user.setUserPriviledges(UserPriviledges.getEmployeePriviledges());
+                } else if("user".equals(role)) {
+                    user.setUserPriviledges(UserPriviledges.getClientPriviledges());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            return user;
         }
 
-        return null;
     }
 
     @Override

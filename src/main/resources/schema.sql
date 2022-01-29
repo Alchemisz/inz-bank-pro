@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS TUser(
     login VARCHAR (25) PRIMARY KEY NOT NULL,
-    tpass VARCHAR (25) NOT NULL,
+    tpass VARCHAR (80) NOT NULL,
     trole VARCHAR (25) NOT NULL
 
 );
