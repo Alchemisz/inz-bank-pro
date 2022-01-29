@@ -1,5 +1,12 @@
 package com.example.demo.user;
 
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
 public class UserService {
     private UserRepository userRepository;
 
@@ -24,4 +31,11 @@ public class UserService {
         userRepository.deleteUser(user.getLogin());
     }
 
+    public List<User> getUsers() {
+        return userRepository.getAll();
+    }
+
+    public List<User> findMatches(String pattern) {
+        return userRepository.getAll().stream().filter(e -> e.getLogin().contains(pattern)).collect(Collectors.toList());
+    }
 }

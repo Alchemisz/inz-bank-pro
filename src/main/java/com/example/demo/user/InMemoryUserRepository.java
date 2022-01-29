@@ -6,8 +6,10 @@ import com.example.demo.security.priviledges.UserPriviledges;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryUserRepository implements UserRepository {
@@ -42,5 +44,10 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public void deleteUser(String login) {
         users.remove(login);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return users.values().stream().collect(Collectors.toList());
     }
 }

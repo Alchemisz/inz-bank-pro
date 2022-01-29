@@ -9,8 +9,14 @@
 <body>
 <div class="container">
     <br>
-    <h4>Hi <span th:text="${userName}"/>! Bank Management System</h4>
+    <a th:href="@{/employee/search}"><input type="button" class="btn btn-outline-primary" value="Back to search"/></a>
+    <br>
+    <br>
+    <h4>Requests for user: <span th:text="${username.value}"></span></h4>
+    <hr>
+    <br>
 
+    <h2 class="text-center">Bank account requests:</h2>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -26,7 +32,7 @@
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.status.typeName}"></td>
             <td th:text="${#numbers.formatDecimal(account.balance, 1, 2)} + ' ' + ${account.currency}"></td>
-            <td><a th:href="@{/employee/account(accountNumber=${account.accountNumber})}"><input type="button" class="btn btn-outline-success" value="Activate"/></a></td>
+            <td><a th:href="@{/employee/accounts/activation(user=${username.value}, accountNumber=${account.accountNumber})}"><input type="button" class="btn btn-outline-success" value="Activate"/></a></td>
         </tr>
         </tbody>
 

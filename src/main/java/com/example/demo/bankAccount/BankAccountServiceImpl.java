@@ -1,5 +1,7 @@
 package com.example.demo.bankAccount;
 
+import com.example.demo.user.User;
+import com.example.demo.user.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -36,8 +38,8 @@ public class BankAccountServiceImpl implements BankAccountService {
     }
 
     @Override
-    public List<BankAccount> getBankAccounts(BankEntityStatus... status) {
-        return bankAccountRepository.getBankAccounts()
+    public List<BankAccount> getUserAccountsForStatus(User user, BankEntityStatus... status) {
+        return user.getAccounts()
                 .stream()
                 .filter(e -> Arrays.stream(status).map(s -> s.equals(e.getStatus())).reduce((a, b) -> (a || b)).get())
                 .collect(Collectors.toList());
@@ -52,5 +54,12 @@ public class BankAccountServiceImpl implements BankAccountService {
     public void blockAccount(String accountNumber) {
         bankAccountRepository.getBankAccount(accountNumber).setStatus(BankEntityStatus.BLOCKED);
         bankAccountRepository.update(bankAccountRepository.getBankAccount(accountNumber));
+    }
+
+    @Override
+    public void activateBankAccount(String accountNumber) {
+        BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
+        bankAccount.setStatus(BankEntityStatus.ACTIVE);
+        bankAccountRepository.update(bankAccount);
     }
 }
