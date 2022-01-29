@@ -20,6 +20,11 @@ public class Card implements Prototype {
         this.status = BankEntityStatus.INACTIVE;
     }
 
+    public Card() {
+        this.status = BankEntityStatus.INACTIVE;
+        this.PIN = 1111;
+    }
+
     public Card(String cardNumber, BankAccount bankAccount) {
         this.cardNumber = cardNumber;
         this.bankAccount = bankAccount;

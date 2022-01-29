@@ -4,6 +4,7 @@ import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountService;
 import com.example.demo.card.Card;
 import com.example.demo.card.CardService;
+import com.example.demo.card.builder.CardDirector;
 import com.example.demo.transfers.Transfer;
 import com.example.demo.transfers.TransferService;
 import com.example.demo.user.User;
@@ -21,8 +22,8 @@ public class RequestFactory {
         return new TransferRequest(transfer, transferService);
     }
 
-    public RequestOrder createCreateCardRequest(CardService cardService, String bankAccount) {
-        return new CreateCardRequest(cardService, bankAccount);
+    public RequestOrder createCreateCardRequest(CardService cardService, String bankAccount, CardDirector cardDirector) {
+        return new CreateCardRequest(cardService, bankAccount, cardDirector);
     }
 
     public RequestOrder createBankAccountRequest(BankAccount bankAccount, User user, BankAccountService bankAccountService){

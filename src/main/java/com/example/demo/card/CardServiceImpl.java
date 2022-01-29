@@ -3,6 +3,8 @@ package com.example.demo.card;
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountRepository;
 import com.example.demo.bankAccount.BankEntityStatus;
+import com.example.demo.card.builder.CardDirector;
+import com.example.demo.card.builder.directorFactory.CardDirectorFactory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,10 +19,8 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public void registerCard(String accountNumber) {
+    public void registerCard(String accountNumber, Card card) {
         BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
-//        TODO generatorek kart
-        Card card = new Card("6655", 1234, bankAccount);
         bankAccount.addCard(card);
         cardRepository.addCard(card);
     }

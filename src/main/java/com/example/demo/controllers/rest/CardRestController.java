@@ -2,6 +2,7 @@ package com.example.demo.controllers.rest;
 
 import com.example.demo.card.Card;
 import com.example.demo.card.CardService;
+import com.example.demo.card.builder.directorFactory.CardDirectorFactory;
 import com.example.demo.request.RequestFactory;
 import com.example.demo.request.RequestOrder;
 import com.example.demo.verification.verificator.AbstractVerificator;
@@ -21,17 +22,19 @@ public class CardRestController {
     private final CardService cardService;
     private final RequestFactory requestFactory;
     private final VerificatorAbstractFactory verificatorAbstractFactory;
+    private final CardDirectorFactory cardDirectorFactory;
 
-    public CardRestController(CardService cardService, RequestFactory requestFactory, VerificatorAbstractFactory verificatorAbstractFactory) {
+    public CardRestController(CardService cardService, RequestFactory requestFactory, VerificatorAbstractFactory verificatorAbstractFactory, CardDirectorFactory cardDirectorFactory) {
         this.cardService = cardService;
         this.requestFactory = requestFactory;
         this.verificatorAbstractFactory = verificatorAbstractFactory;
+        this.cardDirectorFactory = cardDirectorFactory;
     }
 
     @PostMapping("/create")
     public Map<String, String> createCard(@RequestBody JsonNode payload){
         String accountNumber = payload.get("accountNumber").toString().replace("\"", "");
-        RequestOrder createCardRequest = requestFactory.createCreateCardRequest(cardService, accountNumber);
+        RequestOrder createCardRequest = requestFactory.createCreateCardRequest(cardService, accountNumber, cardDirectorFactory.getCardDirector());
         AbstractVerificator createCardVerificator = verificatorAbstractFactory.getCreateCardVerificator(VerificationType.EMAIL);
         String id = createCardVerificator.startVerification(createCardRequest);
         Map<String, String> response = new HashMap<>();
