@@ -43,6 +43,6 @@ public class InMemoryBankAccountRepository implements BankAccountRepository{
 
     @Override
     public void update(BankAccount bankAccount) {
-
+        bankAccountsMap.put(bankAccount.getAccountNumber(), bankAccount);
     }
 }
