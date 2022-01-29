@@ -21,6 +21,7 @@ public class CardServiceImpl implements CardService{
     @Override
     public void registerCard(String accountNumber, Card card) {
         BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
+        card.setBankAccount(bankAccount);
         bankAccount.addCard(card);
         cardRepository.addCard(card);
     }

@@ -21,11 +21,11 @@ CREATE TABLE IF NOT EXISTS BankAccount (
 CREATE TABLE IF NOT EXISTS Card (
 
     cardNumber VARCHAR(50) PRIMARY KEY NOT NULL,
-    pin INT (4),
-    status varchar(24),
-    bankAccount varchar(50),
+    pin INT NOT NULL,
+    status VARCHAR(24) NOT NULL,
+    accountNumber VARCHAR(50) NOT NULL,
 
-    FOREIGN KEY (bankAccount) REFERENCES BankAccount(accountNumber)
+    FOREIGN KEY (accountNumber) REFERENCES BankAccount(accountNumber)
 );
 
 

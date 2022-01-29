@@ -1,6 +1,7 @@
 package com.example.demo.bankAccount;
 
 import com.example.demo.card.Card;
+import com.example.demo.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class BankAccount {
     private BigDecimal balance;
     private String currency;
     private List<Card> cardList;
+    private User user;
 
     public BankAccount(String accountNumber, BankEntityStatus status, BigDecimal balance, String currency) {
         this.accountNumber = accountNumber;
@@ -26,6 +28,7 @@ public class BankAccount {
         this.balance = balance;
         this.currency = currency;
         this.cardList = new ArrayList<>();
+
     }
 
     public void addCard(Card card){

@@ -14,7 +14,7 @@ import java.util.Locale;
 @Repository
 public class SqlCardRepository implements CardRepository{
 
-    private final BankAccountRepository bankAccountRepository;
+    private  BankAccountRepository bankAccountRepository;
     private final DataSource dataSource;
 
     public SqlCardRepository(BankAccountRepository bankAccountRepository, DataSource dataSource) {
@@ -38,7 +38,7 @@ public class SqlCardRepository implements CardRepository{
             {
                         card = new Card(resultSet.getString("cardNumber"), Integer.parseInt(resultSet.getString("pin")),
                         BankEntityStatus.valueOf(resultSet.getString("status").toUpperCase(Locale.ROOT)),
-                        bankAccountRepository.getBankAccount(resultSet.getString("bankAccount")));
+                        bankAccountRepository.getBankAccount(resultSet.getString("accountNumber")));
             }
 
         } catch (SQLException throwables) {
@@ -55,10 +55,16 @@ public class SqlCardRepository implements CardRepository{
         try {
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("INSERT INTO Card Values (?,?,?,?)");
+            System.out.println("Card Number: " + card.getCardNumber());
+            System.out.println("Card Pin: " + card.getPIN());
+            System.out.println("Card Status: " + card.getStatus());
+            System.out.println("Cardd Account Number: " + card.getBankAccount().getAccountNumber());
             preparedStatement.setString(1, card.getCardNumber());
             preparedStatement.setString(2, String.valueOf(card.getPIN()));
             preparedStatement.setString(3,String.valueOf(card.getStatus()));
             preparedStatement.setString(4, card.getBankAccount().getAccountNumber());
+
+
 
             preparedStatement.execute();
 
@@ -90,7 +96,7 @@ public class SqlCardRepository implements CardRepository{
 
         try {
             Connection comm = dataSource.getConnection();
-            PreparedStatement preparedStatement = comm.prepareStatement("UPDATE Card set pin = ?, status = ?, bankAccount = ? where cardNumber = ? ");
+            PreparedStatement preparedStatement = comm.prepareStatement("UPDATE Card set pin = ?, status = ?, accountNumber = ? where cardNumber = ? ");
             preparedStatement.setString(1, String.valueOf(card.getPIN()));
             preparedStatement.setString(2,String.valueOf(card.getStatus()));
             preparedStatement.setString(3, card.getBankAccount().getAccountNumber());
