@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 @Repository
 public class SqlUserRepository implements UserRepository {
 
@@ -26,6 +28,7 @@ public class SqlUserRepository implements UserRepository {
     public User getUser(String login) {
         User user = new User();
         user.setUserPriviledges(UserPriviledges.getNoPriviledges());
+        user.setAccounts(new ArrayList<>());
         try {
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM TUser where login = ?");

@@ -13,6 +13,14 @@ public class Card implements Prototype {
     private BankEntityStatus status;
     private BankAccount bankAccount;
 
+
+    public Card(String cardNumber, Integer PIN, BankEntityStatus status, BankAccount bankAccount) {
+        this.cardNumber = cardNumber;
+        this.PIN = PIN;
+        this.status = status;
+        this.bankAccount = bankAccount;
+    }
+
     public Card(String cardNumber, Integer PIN, BankAccount bankAccount) {
         this.cardNumber = cardNumber;
         this.PIN = PIN;

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS TUser(
 
 CREATE TABLE IF NOT EXISTS BankAccount (
 
-    accountNumber VARCHAR(24)  PRIMARY KEY NOT NULL,
+    accountNumber VARCHAR(50)  PRIMARY KEY NOT NULL,
     status VARCHAR(16) NOT NULL,
     balance DOUBLE NOT NULL,
     currency VARCHAR(16) not null,
@@ -20,19 +20,22 @@ CREATE TABLE IF NOT EXISTS BankAccount (
 
 CREATE TABLE IF NOT EXISTS Card (
 
-    cardNumber VARCHAR(25) PRIMARY KEY NOT NULL,
-    bankAccount varchar(24),
+    cardNumber VARCHAR(50) PRIMARY KEY NOT NULL,
+    pin INT (4),
+    status varchar(24),
+    bankAccount varchar(50),
+
     FOREIGN KEY (bankAccount) REFERENCES BankAccount(accountNumber)
-    );
+);
 
 
 
 
 CREATE TABLE IF NOT EXISTS Transfer (
 
-    id INTEGER PRIMARY KEY NOT NULL,
-    senderId VARCHAR(24) NOT NULL,
-    receiverId VARCHAR(24) NOT NULL,
-    amount DOUBLE NOT NULL
-
-    );
+    id VARCHAR(50) PRIMARY KEY NOT NULL,
+    senderId VARCHAR(50) NOT NULL,
+    receiverId VARCHAR(50) NOT NULL,
+    amount DOUBLE NOT NULL,
+    transferDate DATE NOT NULL
+);
