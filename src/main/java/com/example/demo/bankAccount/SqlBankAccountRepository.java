@@ -1,5 +1,6 @@
 package com.example.demo.bankAccount;
 
+import com.example.demo.card.Card;
 import com.example.demo.transfers.Transfer;
 import com.example.demo.user.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -98,6 +99,19 @@ public class SqlBankAccountRepository implements BankAccountRepository{
                 bankAccount.setCurrency(resultSet.getString("currency"));
                 bankAccount.setUser(userRepository.getUser(resultSet.getString("login")));
 
+                bankAccount.setCardList(new ArrayList<>());
+                PreparedStatement preparedStatement2 = comm.prepareStatement("SELECT  * FROM Card where accountNumber = ?");
+
+                ResultSet resultSet2 = preparedStatement2.executeQuery();
+
+                while(resultSet2.next())
+                {
+                            Card card = new Card(resultSet2.getString("cardNumber"), Integer.parseInt(resultSet2.getString("pin")),
+                            BankEntityStatus.valueOf(resultSet2.getString("status").toUpperCase(Locale.ROOT)),
+                            bankAccount);
+
+                            bankAccount.getCardList().add(card);
+                }
 
                 bankAccounts.add(bankAccount);
             }

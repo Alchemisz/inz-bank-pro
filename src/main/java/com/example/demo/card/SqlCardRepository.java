@@ -55,10 +55,6 @@ public class SqlCardRepository implements CardRepository{
         try {
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("INSERT INTO Card Values (?,?,?,?)");
-            System.out.println("Card Number: " + card.getCardNumber());
-            System.out.println("Card Pin: " + card.getPIN());
-            System.out.println("Card Status: " + card.getStatus());
-            System.out.println("Cardd Account Number: " + card.getBankAccount().getAccountNumber());
             preparedStatement.setString(1, card.getCardNumber());
             preparedStatement.setString(2, String.valueOf(card.getPIN()));
             preparedStatement.setString(3,String.valueOf(card.getStatus()));
