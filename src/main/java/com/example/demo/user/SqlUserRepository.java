@@ -85,7 +85,7 @@ public class SqlUserRepository implements UserRepository {
                 bankAccount.setStatus(BankEntityStatus.valueOf(resultSet.getString("status").toUpperCase(Locale.ROOT)));
                 bankAccount.setBalance(BigDecimal.valueOf(Double.parseDouble(resultSet.getString("balance"))));
                 bankAccount.setCurrency(resultSet.getString("currency"));
-                bankAccount.setUser(getUser(resultSet.getString("login")));
+                bankAccount.setUser(new User(resultSet.getString("login"), "", UserPriviledges.getNoPriviledges()));
 
                 bankAccount.setCardList(new ArrayList<>());
                 PreparedStatement preparedStatement2 = comm.prepareStatement("SELECT  * FROM Card where accountNumber = ?");
