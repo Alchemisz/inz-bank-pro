@@ -14,8 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -36,6 +35,7 @@ public class TransferServiceTest {
         transferService.registerTransfer(transfer);
         assertNotNull(transferRepository.getTransfer(transfer.getId()));
     }
+
     @Test
     public void registerTransferToYourSelfTest()
     {
@@ -56,23 +56,37 @@ public class TransferServiceTest {
     @Test
     public void assignedTransferToAccount()
     {
-
         Transfer transfer = new Transfer("3","26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
         transferService.registerTransfer(transfer);
         assertNotNull(transferRepository.getAccountsTransfers(bankAccountRepository.getBankAccount(transfer.getSenderId())));
-
     }
 
     @Test
     public void transferByIdVerification()
     {
-
         Transfer transfer = new Transfer("4","26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
         transferService.registerTransfer(transfer);
         String idTransfer = transfer.getId();
         assertNotNull(transferRepository.getTransfer(idTransfer));
-
     }
+
+   @Test
+
+    public void registerTransferToWrongReceiver() //do poprawy
+   {
+       Transfer transfer = new Transfer("5", "26922018960603293159613803", "26922018960603293159613810", new BigDecimal(50));
+       transferService.registerTransfer(transfer);
+       assertNull(transferRepository.getTransfer(transfer.getId()));
+    }
+
+    @Test
+    public void validDifferenceNextId()
+    {
+        int number1 = Integer.parseInt(transferService.getNextId());
+        int number2 = Integer.parseInt(transferService.getNextId());
+        assertEquals(number2, number1+1);
+    }
+
 
 
 
