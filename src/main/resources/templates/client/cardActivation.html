@@ -38,6 +38,7 @@
         <button id="submitVerification" class="btn btn-light" >Potwierdź</button>
     </div>
 </div>
+<script th:src="@{/js/verificationProcess.js}"></script>
 <script>
     let cardNumber = document.getElementById("cardId").textContent;
     let pin1 = document.getElementById("pin1");
@@ -74,20 +75,7 @@
         xhttp.send(JSON.stringify({"cardNumber":cardNumber, "pin":pin1.value}));
     });
 
-    submitVerification.addEventListener('click', () => {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function() {
-            let json = JSON.parse(this.responseText)
-            console.log(json);
-            if(json['verified'] === "true") {
-                window.location = "/client/account?accountNumber="+handledAccountNumber;
-            }
-        }
-        xhttp.open("PUT", "/verification/verify/" + requestId, true);
-        xhttp.setRequestHeader("Content-Type", "application/json");
-        console.log(JSON.stringify({code:verifyCode.value}))
-        xhttp.send(JSON.stringify({code:verifyCode.value}));
-    });
+    submitVerification.addEventListener('click', () => verificationProcess(verifyCode.value, requestId, "/client/account?accountNumber="+handledAccountNumber));
 
 </script>
 
