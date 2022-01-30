@@ -91,10 +91,6 @@ public class SqlTransferRepository implements TransferRepository{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
-
         return transfers;
     }
 }
