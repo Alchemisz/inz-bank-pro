@@ -19,9 +19,6 @@ import static org.junit.Assert.assertNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@WebAppConfiguration
-@AutoConfigureMockMvc
-@WebMvcTest(AuthService.class)
 public class AuthServiceTest {
 
     @Autowired
@@ -46,10 +43,6 @@ public class AuthServiceTest {
         String auth = authService.requestAuth(login, pass);
 
         assertNotNull(auth);
-
-
-
-
     }
 
 

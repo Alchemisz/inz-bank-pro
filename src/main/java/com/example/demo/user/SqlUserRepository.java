@@ -117,11 +117,37 @@ public class SqlUserRepository implements UserRepository {
 
     @Override
     public void insertUser(User user) {
+        try {
+            Connection comm = dataSource.getConnection();
+            PreparedStatement preparedStatement = comm.prepareStatement("INSERT INTO TUser VALUES (?,?,?)");
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPass());
+            if(user.getUserPriviledges().isHasAdminRights()) {
+                preparedStatement.setString(3, "admin");
+            } else if(user.getUserPriviledges().isHasClientRights()) {
+                preparedStatement.setString(3, "user");
+            } else if(user.getUserPriviledges().isHasEmployeeRights()) {
+                preparedStatement.setString(3, "employee");
+            }
 
+            preparedStatement.execute();
+            comm.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteUser(String login) {
+        try {
+            Connection comm = dataSource.getConnection();
+            PreparedStatement preparedStatement = comm.prepareStatement("DELETE FROM TUser WHERE login = ?");
+            preparedStatement.setString(1, login);
 
+            preparedStatement.execute();
+            comm.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
