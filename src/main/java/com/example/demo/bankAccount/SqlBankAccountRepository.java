@@ -154,7 +154,7 @@ public class SqlBankAccountRepository implements BankAccountRepository{
 
 
 
-            preparedStatement.setString(1, String.valueOf(bankAccount.getStatus()));
+            preparedStatement.setString(1, bankAccount.getAccountNumber());
             preparedStatement.setString(2, String.valueOf(bankAccount.getBalance()));
             preparedStatement.setString(3, bankAccount.getCurrency());
             preparedStatement.setString(4, bankAccount.getUser().getLogin());

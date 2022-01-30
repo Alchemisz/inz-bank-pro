@@ -72,27 +72,20 @@ public class SqlTransferRepository implements TransferRepository{
     public List<Transfer> getAccountsTransfers(BankAccount bankAccount) {
         List<Transfer> transfers = new ArrayList<>();
         try {
-
-
-
             Connection comm = dataSource.getConnection();
-            PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM Transfer where senderId = ? or receiverId = ? ");
 
+            PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM Transfer where senderId = ? or receiverId = ? ");
             preparedStatement.setString(1, bankAccount.getAccountNumber());
             preparedStatement.setString(2, bankAccount.getAccountNumber());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-
-
             while(resultSet.next())
             {
-
-                Transfer transfer = new Transfer(resultSet.getString("id"), resultSet.getString("senderId"),
+                        Transfer transfer = new Transfer(resultSet.getString("id"), resultSet.getString("senderId"),
                         resultSet.getString("receiverId"), BigDecimal.valueOf(Double.parseDouble(resultSet.getString("amount"))));
                         transfer.setTransferDate(Date.valueOf(resultSet.getString("transferDate")));
                         transfers.add(transfer);
-
             }
             comm.close();
         } catch (SQLException e) {

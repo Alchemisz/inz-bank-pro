@@ -94,7 +94,7 @@ public class SqlCardRepository implements CardRepository{
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("UPDATE Card set pin = ?, status = ?, accountNumber = ? where cardNumber = ? ");
             preparedStatement.setString(1, String.valueOf(card.getPIN()));
-            preparedStatement.setString(2,String.valueOf(card.getStatus()));
+            preparedStatement.setString(2, String.valueOf(card.getStatus()));
             preparedStatement.setString(3, card.getBankAccount().getAccountNumber());
             preparedStatement.setString(4, card.getCardNumber());
 

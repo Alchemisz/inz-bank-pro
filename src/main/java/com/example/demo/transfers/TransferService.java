@@ -52,6 +52,7 @@ public class TransferService {
             System.out.println("odbiorca zewnętrzny");
         }
         transferRepository.addTransfer(transfer);
+
     }
 
     public List<Transfer> getAssignedTransfers(BankAccount bankAccount){

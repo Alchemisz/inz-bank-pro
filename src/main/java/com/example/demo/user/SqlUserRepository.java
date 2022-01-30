@@ -71,9 +71,6 @@ public class SqlUserRepository implements UserRepository {
     public List<BankAccount> getBankAccounts(Connection comm) {
         List<BankAccount> bankAccounts = new ArrayList<>();
         try {
-
-
-
             PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM BankAccount ");
 
             ResultSet resultSet = preparedStatement.executeQuery();
