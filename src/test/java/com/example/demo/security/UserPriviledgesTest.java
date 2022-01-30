@@ -29,7 +29,7 @@ public class UserPriviledgesTest {
 
     @Test
     public void employeeRightsTest() {
-        UserPriviledges userPriviledges = UserPriviledges.getAdminPriviledges();
+        UserPriviledges userPriviledges = UserPriviledges.getEmployeePriviledges();
         assertFalse(userPriviledges.isHasAdminRights());
         assertTrue(userPriviledges.isHasClientRights());
         assertTrue(userPriviledges.isHasEmployeeRights());
@@ -38,7 +38,7 @@ public class UserPriviledgesTest {
 
     @Test
     public void clientRightsTest() {
-        UserPriviledges userPriviledges = UserPriviledges.getAdminPriviledges();
+        UserPriviledges userPriviledges = UserPriviledges.getClientPriviledges();
         assertFalse(userPriviledges.isHasAdminRights());
         assertTrue(userPriviledges.isHasClientRights());
         assertFalse(userPriviledges.isHasEmployeeRights());
@@ -62,7 +62,7 @@ public class UserPriviledgesTest {
     @Test
     public void setAndGetEmployeeRightsTest() {
         UserPriviledges userPriviledges = UserPriviledges.getNoPriviledges();
-        userPriviledges.setHasClientRights(true);
+        userPriviledges.setHasEmployeeRights(true);
         assertTrue(userPriviledges.isHasEmployeeRights());
     }
 

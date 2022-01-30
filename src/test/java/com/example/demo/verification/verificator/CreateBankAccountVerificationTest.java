@@ -3,6 +3,7 @@ package com.example.demo.verification.verificator;
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountService;
 import com.example.demo.request.CreateBankAccountRequest;
+import com.example.demo.request.CreateBankAccountRequestTest;
 import com.example.demo.security.priviledges.UserPriviledges;
 import com.example.demo.user.User;
 import com.example.demo.verification.VerificationService;
@@ -51,7 +52,7 @@ public class CreateBankAccountVerificationTest {
     }
 
     @Test
-    public void CreateBankAccountVerificatorTest() {
+    public void createBankAccountVerificatorTest() {
         VerificationStrategyFactory factoryMock = new VerificationStrategyFactory() {
 
             @Override
