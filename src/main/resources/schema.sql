@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS TUser(
 CREATE TABLE IF NOT EXISTS BankAccount (
 
     accountNumber VARCHAR(50)  PRIMARY KEY NOT NULL,
-    status VARCHAR(16) NOT NULL,
+    status VARCHAR(25) NOT NULL,
     balance DOUBLE NOT NULL,
     currency VARCHAR(16) not null,
     login varchar(25) not null,
