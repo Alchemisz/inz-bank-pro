@@ -1,6 +1,6 @@
 package com.example.demo.controllers.rest;
 
-import com.example.demo.document.pef.PDFGeneratorService;
+import com.example.demo.document.pdf.PDFGeneratorService;
 import com.example.demo.request.RequestFactory;
 import com.example.demo.request.RequestOrder;
 import com.example.demo.transfers.Transfer;
@@ -58,10 +58,6 @@ public class TransferController {
     @GetMapping("/transfer/{transferId}")
     public void generateTransferConfirmationPDF(@PathVariable("transferId") String id, HttpServletResponse response){
         Transfer transfer = transferService.getTransferById(id);
-        response.setContentType("application/pdf");
-        String headerKey = "Content-Disposition";
-        String headerValue = "inline; filename=transfer_" + transfer.getId() + "_" + transfer.getTransferDate() + ".pdf";
-        response.setHeader(headerKey, headerValue);
         pdfGeneratorService.export(response, transfer);
     }
 }
