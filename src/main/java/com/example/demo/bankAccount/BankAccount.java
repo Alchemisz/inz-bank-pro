@@ -28,7 +28,6 @@ public class BankAccount {
         this.balance = balance;
         this.currency = currency;
         this.cardList = new ArrayList<>();
-
     }
 
     public void addCard(Card card){

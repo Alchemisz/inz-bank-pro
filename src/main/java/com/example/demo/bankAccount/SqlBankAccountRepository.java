@@ -36,7 +36,6 @@ public class SqlBankAccountRepository implements BankAccountRepository{
             PreparedStatement preparedStatement = comm.prepareStatement("SELECT * FROM BankAccount where accountNumber = ?");
             preparedStatement.setString(1, accountNUmber);
             ResultSet resultSet = preparedStatement.executeQuery();
-
             if(resultSet.next())
             {
                 bankAccount = new BankAccount();
@@ -79,8 +78,8 @@ public class SqlBankAccountRepository implements BankAccountRepository{
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("INSERT INTO BankAccount VALUES (?,?,?,?,?)");
             preparedStatement.setString(1,  bankAccount.getAccountNumber());
-            preparedStatement.setString(2, String.valueOf(bankAccount.getStatus()));
-            preparedStatement.setString(3, String.valueOf(bankAccount.getBalance()));
+            preparedStatement.setString(2, bankAccount.getStatus().toString());
+            preparedStatement.setString(3, bankAccount.getBalance().toString());
             preparedStatement.setString(4, bankAccount.getCurrency());
             preparedStatement.setString(5, bankAccount.getUser().getLogin());
 

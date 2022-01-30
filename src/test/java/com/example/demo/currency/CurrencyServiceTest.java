@@ -2,6 +2,7 @@ package com.example.demo.currency;
 
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankEntityStatus;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

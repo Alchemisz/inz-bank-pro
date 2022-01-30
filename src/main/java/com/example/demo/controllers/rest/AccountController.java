@@ -47,7 +47,7 @@ public class AccountController {
     public Map<String, String> createBankAccountRequest(HttpSession httpSession){
         User user = (User) httpSession.getAttribute("user");
         BankAccount bankAccount = bankAccountDirectorFactory.getBankAccountDirector().getBankAccount();
-        bankAccount.setUser((User) httpSession.getAttribute("user"));
+        bankAccount.setUser(user);
         RequestOrder bankAccountRequest = requestFactory.createBankAccountRequest(bankAccount, user, bankAccountService);
         AbstractVerificator bankAccountVerificator = verificatorAbstractFactory.getCreateBankAccountVerificator(VerificationType.EMAIL);
         String id = bankAccountVerificator.startVerification(bankAccountRequest);
