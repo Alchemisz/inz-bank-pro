@@ -30,9 +30,6 @@ public class TransferRequestTest {
     @Autowired
     RequestFactory requestFactory;
 
-    @Autowired
-    TransferRepository transferRepository;
-
     @Test
     public void validTransferRequestTest() {
         BankAccount sender = bankAccountService.getBankAccount("26922018960603293159613803");
@@ -49,7 +46,10 @@ public class TransferRequestTest {
 
         assertNotNull(transferService.getTransferById(transfer.getId()));
 
-
+        sender = bankAccountService.getBankAccount("26922018960603293159613803");
+        reciever = bankAccountService.getBankAccount("27926303620212481874123474");
+        assertEquals(sender.getBalance(), senderBalance.subtract(ammount));
+        assertEquals(reciever.getBalance(), recieverBalance.add(ammount));
     }
 
 }
