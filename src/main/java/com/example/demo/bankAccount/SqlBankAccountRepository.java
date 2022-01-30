@@ -77,9 +77,9 @@ public class SqlBankAccountRepository implements BankAccountRepository{
         try {
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("INSERT INTO BankAccount VALUES (?,?,?,?,?)");
-            preparedStatement.setString(1, String.valueOf(bankAccount.getStatus()));
-            preparedStatement.setString(2, String.valueOf(bankAccount.getBalance()));
-            preparedStatement.setString(3, bankAccount.getCurrency());
+            preparedStatement.setString(1, bankAccount.getAccountNumber());
+            preparedStatement.setString(2, bankAccount.getStatus().toString());
+            preparedStatement.setString(3, bankAccount.getBalance().toString());
             preparedStatement.setString(4, bankAccount.getCurrency());
             preparedStatement.setString(5, bankAccount.getUser().getLogin());
 
@@ -153,8 +153,8 @@ public class SqlBankAccountRepository implements BankAccountRepository{
 
 
 
-            preparedStatement.setString(1, String.valueOf(bankAccount.getStatus()));
-            preparedStatement.setString(2, String.valueOf(bankAccount.getBalance()));
+            preparedStatement.setString(1, bankAccount.getStatus().toString());
+            preparedStatement.setString(2, bankAccount.getBalance().toString());
             preparedStatement.setString(3, bankAccount.getCurrency());
             preparedStatement.setString(4, bankAccount.getUser().getLogin());
             preparedStatement.setString(5, bankAccount.getAccountNumber());

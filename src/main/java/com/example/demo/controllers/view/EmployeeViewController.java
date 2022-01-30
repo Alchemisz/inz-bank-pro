@@ -35,6 +35,7 @@ public class EmployeeViewController {
         BankAccount bankAccount = bankAccountService.getBankAccount(accountNumber);
         model.addAttribute("userAccounts", bankAccountService.getBankAccounts(BankEntityStatus.INACTIVE));
         bankAccount.setStatus(BankEntityStatus.ACTIVE);
+        bankAccountService.update(bankAccount);
         return "redirect:/employee";
     }
 
