@@ -49,6 +49,7 @@
             <button id="submitVerification" class="btn btn-light" >potwierdź</button>
         </div>
     </div>
+    <script th:src="@{/js/verificationProcess.js}"></script>
     <script>
         var accountNumber = document.getElementById("accountNumber");
         var reciever = document.getElementById("reciever");
@@ -58,7 +59,7 @@
         var verifyCode = document.getElementById("verifyCode");
         var submitVerification = document.getElementById("submitVerification");
 
-        var loginRequestId = -1;
+        var requestId = -1;
 
         submit.addEventListener('click', () => {
                const xhttp = new XMLHttpRequest();
@@ -66,7 +67,7 @@
                xhttp.onload = function() {
                     var json = JSON.parse(this.responseText)
                     if(json['requestId']) {
-                        loginRequestId = json['requestId'];
+                        requestId = json['requestId'];
                         verify.style.display = 'block';
                     } else {
                         console.log(json['errorMsg']);
@@ -77,20 +78,7 @@
                xhttp.send(JSON.stringify({"accountNumber":accountNumber.innerHTML, "reciever":reciever.value, "amount":amount.value}));
         });
 
-        submitVerification.addEventListener('click', () => {
-            const xhttp = new XMLHttpRequest();
-               xhttp.onload = function() {
-                    var json = JSON.parse(this.responseText)
-                    console.log(json);
-                    if(json['verified'] == "true") {
-                        window.location = "/client/home";
-                    }
-               }
-               xhttp.open("PUT", "/verification/verify/" + loginRequestId, true);
-               xhttp.setRequestHeader("Content-Type", "application/json");
-               console.log(JSON.stringify({code:verifyCode.value}))
-               xhttp.send(JSON.stringify({code:verifyCode.value}));
-        });
+        submitVerification.addEventListener('click', () => verificationProcess(verifyCode.value, requestId, "/client/home"));
     </script>
 </body>
 </html>
