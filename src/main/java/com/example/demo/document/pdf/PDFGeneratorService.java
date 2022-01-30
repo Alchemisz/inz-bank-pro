@@ -1,4 +1,4 @@
-package com.example.demo.document.pef;
+package com.example.demo.document.pdf;
 
 import com.example.demo.transfers.Transfer;
 
