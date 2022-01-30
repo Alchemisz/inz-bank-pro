@@ -19,7 +19,7 @@ public class BankAccountServiceTest {
     private BankAccountService bankAccountService;
     @Autowired
     private BankAccountRepository bankAccountRepository;
-
+    private BankAccount bankAccount;
     @Test
     public void accountNumberShouldExists(){
         //Given
@@ -39,5 +39,15 @@ public class BankAccountServiceTest {
         //then
         assertThat(unExistingAccountNUmber.length()).isEqualTo(26);
         assertThat(accountNumberExists).isFalse();
+    }
+    @Test
+    public void getBankAccountWorksCorrectly()
+    {
+        bankAccount = bankAccountService.getBankAccount("26922018960603293159613803");
+
+        assertThat(bankAccount.getAccountNumber().equals("26922018960603293159613803"));
+        assertThat(bankAccount.getBalance().equals(120));
+        assertThat(bankAccount.getCurrency().equals("PLN"));
+        assertThat(bankAccount.getClass().equals(BankAccount.class));
     }
 }
