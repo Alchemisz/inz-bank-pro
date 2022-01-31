@@ -56,7 +56,7 @@ public class SqlCardRepository implements CardRepository{
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("INSERT INTO Card Values (?,?,?,?)");
             preparedStatement.setString(1, card.getCardNumber());
-            preparedStatement.setString(2, String.valueOf(card.getPIN()));
+            preparedStatement.setInt(2, card.getPIN());
             preparedStatement.setString(3,String.valueOf(card.getStatus()));
             preparedStatement.setString(4, card.getBankAccount().getAccountNumber());
 
@@ -93,7 +93,7 @@ public class SqlCardRepository implements CardRepository{
         try {
             Connection comm = dataSource.getConnection();
             PreparedStatement preparedStatement = comm.prepareStatement("UPDATE Card set pin = ?, status = ?, accountNumber = ? where cardNumber = ? ");
-            preparedStatement.setString(1, String.valueOf(card.getPIN()));
+            preparedStatement.setInt(1, card.getPIN());
             preparedStatement.setString(2, String.valueOf(card.getStatus()));
             preparedStatement.setString(3, card.getBankAccount().getAccountNumber());
             preparedStatement.setString(4, card.getCardNumber());

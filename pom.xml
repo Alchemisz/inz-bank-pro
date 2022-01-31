@@ -87,9 +87,18 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc10</artifactId>
+			<version>19.13.0.0.1</version>
 			<scope>runtime</scope>
 		</dependency>
-        <dependency>
+
+
+		<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
