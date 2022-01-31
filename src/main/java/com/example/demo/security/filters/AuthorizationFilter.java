@@ -31,6 +31,8 @@ public class AuthorizationFilter implements Filter {
         User user = (User) httpSession.getAttribute("user");
         if(user == null) {
             return;
+        } else {
+            httpSession.setAttribute("user", userRepository.getUser(user.getLogin()));
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
