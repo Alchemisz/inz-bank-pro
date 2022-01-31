@@ -31,7 +31,7 @@ public class UserPriviledgesTest {
     public void employeeRightsTest() {
         UserPriviledges userPriviledges = UserPriviledges.getEmployeePriviledges();
         assertFalse(userPriviledges.isHasAdminRights());
-        assertTrue(userPriviledges.isHasClientRights());
+        assertFalse(userPriviledges.isHasClientRights());
         assertTrue(userPriviledges.isHasEmployeeRights());
         assertFalse(userPriviledges.isBlocked());
     }

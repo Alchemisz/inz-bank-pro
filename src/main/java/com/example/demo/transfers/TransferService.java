@@ -3,9 +3,11 @@ package com.example.demo.transfers;
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountRepository;
 import com.example.demo.bankAccount.BankAccountService;
+import com.example.demo.security.HashingService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -13,11 +15,13 @@ public class TransferService {
     TransferRepository transferRepository;
     com.example.demo.card.CardService cardService;
     BankAccountService bankAccountService;
+    HashingService hashingService;
 
-    public TransferService(TransferRepository transferRepository, com.example.demo.card.CardService cardService, BankAccountService bankAccountService) {
+    public TransferService(TransferRepository transferRepository, com.example.demo.card.CardService cardService, BankAccountService bankAccountService, HashingService hashingService) {
         this.transferRepository = transferRepository;
         this.cardService = cardService;
         this.bankAccountService = bankAccountService;
+        this.hashingService = hashingService;
     }
 
     private String id = "1";
@@ -26,7 +30,7 @@ public class TransferService {
         String id = this.id;
         int intId = Integer.parseInt(id);
         this.id = (++intId) + "";
-        return id;
+        return hashingService.hash(String.valueOf(new Date().getTime()));
     }
     public void registerTransfer(Transfer transfer) {
         System.out.println("próba transferu: " + transfer.getId() + " wysyłkowicz: " + transfer.getSenderId() + "odbiorca: " + transfer.getReceiverId());

@@ -31,7 +31,7 @@ public class TransferServiceTest {
     @Test
     public void registerValidTransferTest()
     {
-        Transfer transfer = new Transfer("1","26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
+        Transfer transfer = new Transfer(transferService.getNextId(),"26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
         transferService.registerTransfer(transfer);
         assertNotNull(transferRepository.getTransfer(transfer.getId()));
     }
@@ -39,7 +39,7 @@ public class TransferServiceTest {
     @Test
     public void registerTransferToYourSelfTest()
     {
-        Transfer transfer = new Transfer("2", "26922018960603293159613803", "26922018960603293159613803", new BigDecimal(50));
+        Transfer transfer = new Transfer(transferService.getNextId(), "26922018960603293159613803", "26922018960603293159613803", new BigDecimal(50));
 
        try{
 
@@ -56,7 +56,7 @@ public class TransferServiceTest {
     @Test
     public void assignedTransferToAccount()
     {
-        Transfer transfer = new Transfer("3","26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
+        Transfer transfer = new Transfer(transferService.getNextId(),"26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
         transferService.registerTransfer(transfer);
         assertNotNull(transferRepository.getAccountsTransfers(bankAccountRepository.getBankAccount(transfer.getSenderId())));
     }
@@ -64,7 +64,7 @@ public class TransferServiceTest {
     @Test
     public void transferByIdVerification()
     {
-        Transfer transfer = new Transfer("4","26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
+        Transfer transfer = new Transfer(transferService.getNextId(),"26922018960603293159613803", "27926303620212481874123474", new BigDecimal(30));
         transferService.registerTransfer(transfer);
         String idTransfer = transfer.getId();
         assertNotNull(transferRepository.getTransfer(idTransfer));
@@ -74,7 +74,7 @@ public class TransferServiceTest {
 
     public void registerTransferToWrongReceiver() //do poprawy
    {
-       Transfer transfer = new Transfer("5", "26922018960603293159613803", "26922018960603293159613810", new BigDecimal(50));
+       Transfer transfer = new Transfer(transferService.getNextId(), "26922018960603293159613803", "26922018960603293159613810", new BigDecimal(50));
        transferService.registerTransfer(transfer);
        assertNull(transferRepository.getTransfer(transfer.getId()));
     }
@@ -82,9 +82,9 @@ public class TransferServiceTest {
     @Test
     public void validDifferenceNextId()
     {
-        int number1 = Integer.parseInt(transferService.getNextId());
-        int number2 = Integer.parseInt(transferService.getNextId());
-        assertEquals(number2, number1+1);
+        String a = transferService.getNextId();
+        String b = transferService.getNextId();
+        assertNotEquals(a, b);
     }
 
 

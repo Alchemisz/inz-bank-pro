@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
@@ -84,11 +86,17 @@ public class SqlTransferRepository implements TransferRepository{
             {
                         Transfer transfer = new Transfer(resultSet.getString("id"), resultSet.getString("senderId"),
                         resultSet.getString("receiverId"), BigDecimal.valueOf(Double.parseDouble(resultSet.getString("amount"))));
-                        transfer.setTransferDate(Date.valueOf(resultSet.getString("transferDate")));
+                        String date = resultSet.getString("transferDate");
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                        java.util.Date date1 = simpleDateFormat.parse(date);
+                        Date date2 = new Date(date1.getTime());
+                        transfer.setTransferDate(date2);
                         transfers.add(transfer);
             }
             comm.close();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return transfers;
