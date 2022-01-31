@@ -1,6 +1,7 @@
 package com.example.demo.bankAccount;
 
 import com.example.demo.card.Card;
+import com.example.demo.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,12 +14,13 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class BankAccount {
-
+    private int id;
     private String accountNumber;
     private BankEntityStatus status;
     private BigDecimal balance;
     private String currency;
     private List<Card> cardList;
+    private User user;
 
     public BankAccount(String accountNumber, BankEntityStatus status, BigDecimal balance, String currency) {
         this.accountNumber = accountNumber;

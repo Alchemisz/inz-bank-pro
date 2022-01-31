@@ -1,11 +1,9 @@
 package com.example.demo.verification.verificator;
 
-import com.example.demo.bankAccount.BankAccount;
-import com.example.demo.bankAccount.BankAccountService;
-import com.example.demo.request.CreateBankAccountRequest;
-import com.example.demo.request.CreateBankAccountRequestTest;
-import com.example.demo.security.priviledges.UserPriviledges;
-import com.example.demo.user.User;
+import com.example.demo.card.CardService;
+import com.example.demo.card.builder.directorFactory.CardDirectorFactory;
+import com.example.demo.request.RequestFactory;
+import com.example.demo.request.RequestOrder;
 import com.example.demo.verification.VerificationService;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,18 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CreateBankAccountVerificationTest {
+public class ActivateCardVerificatorTest {
     @Autowired
     private VerificationService verificationService;
 
     @Autowired
-    private BankAccountService bankAccountService;
+    private CardService cardService;
+
+    @Autowired
+    private RequestFactory requestFactory;
+
+    @Autowired
+    private CardDirectorFactory cardDirectorFactory;
 
     private volatile List<String> logger = new ArrayList<>();
-
 
     private VerificationStrategyFactory factoryMock;
     private VerificatorAbstractFactory verificatorAbstractFactory;
@@ -52,7 +54,7 @@ public class CreateBankAccountVerificationTest {
     }
 
     @Test
-    public void createBankAccountVerificatorTest() {
+    public void createCardVerificatorTest() {
         VerificationStrategyFactory factoryMock = new VerificationStrategyFactory() {
 
             @Override
@@ -67,13 +69,14 @@ public class CreateBankAccountVerificationTest {
         };
         VerificatorAbstractFactory verificatorAbstractFactory = new VerificatorAbstractFactory(factoryMock, verificationService);
 
-        AbstractVerificator verificator = verificatorAbstractFactory.getCreateBankAccountVerificator(VerificationType.EMAIL);
-        assertEquals(verificator.getClass(), CreateBankAccountVerificator.class);
-        CreateBankAccountRequest createBankAccountRequest = new CreateBankAccountRequest(new BankAccount(), new User("", "", UserPriviledges.getClientPriviledges()), bankAccountService);
-        String id = verificator.startVerification(createBankAccountRequest);
+        AbstractVerificator verificator = verificatorAbstractFactory.getActivateCardVerificator(VerificationType.EMAIL);
+        assertEquals(verificator.getClass(), ActivateCardVerificator.class);
+
+        RequestOrder activateCardTransfer = requestFactory.createBlockCardRequest(cardService, "0");
+        String id = verificator.startVerification(activateCardTransfer);
 
         assertFalse(logger.isEmpty());
-        assertTrue(logger.get(0).contains("account") && logger.get(0).contains("code"));
+        assertTrue(logger.get(0).contains("activate") && logger.get(0).contains("code"));
         logger.clear();
     }
 }

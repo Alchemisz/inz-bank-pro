@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -18,16 +17,16 @@ public class UserRepositoryTest {
 
     @Test
     public void insertAndGetUserTest() {
-        User user = new User("test", "test", UserPriviledges.getClientPriviledges());
+        User user = new User("user1", "user1", UserPriviledges.getClientPriviledges());
         userRepository.insertUser(user);
-        assertEquals(user, userRepository.getUser("test"));
+        assertEquals(user.getLogin(), userRepository.getUser("user1").getLogin());
     }
 
     @Test
     public void removeUserTest() {
-        User user = new User("test2", "test2", UserPriviledges.getClientPriviledges());
+        User user = new User("user2", "user2", UserPriviledges.getClientPriviledges());
         userRepository.insertUser(user);
-        userRepository.deleteUser("test2");
-        assertNull(userRepository.getUser("test2"));
+        userRepository.deleteUser("user2");
+        assertNotEquals("user2", userRepository.getUser("user2").getLogin());
     }
 }

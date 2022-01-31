@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
+
 public class CardRepositoryMemoryImpl implements CardRepository{
 
     private final Map<String, Card> cardRepository;
