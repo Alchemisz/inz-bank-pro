@@ -150,4 +150,9 @@ public class SqlUserRepository implements UserRepository {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<User> getAll() {
+        return null;
+    }
 }

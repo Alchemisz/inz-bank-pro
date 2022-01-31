@@ -19,6 +19,10 @@ public class Currency {
     public Currency() {
     }
 
+    public Currency(String name) {
+        this.currencyName = name;
+    }
+
     @JsonProperty("query")
     private void unpackNested(Map<String, String> query){
         this.currencyName = query.get("base_currency");
