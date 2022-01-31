@@ -16,10 +16,14 @@ public class ApiCurrencyRepository implements CurrencyRepository{
 
     private List<String> currenciesCodes;
 
+    private final String key1 = "https://v6.exchangerate-api.com/v6/d80ee2fe846c182d625bb90c/latest/";
+    private final String key2 = "https://freecurrencyapi.net/api/v2/latest?apikey=1f114580-730a-11ec-8ee4-437bd0793e7e&base_currency=";
+
     public ApiCurrencyRepository() {
         currenciesCodes = new ArrayList<>();
         currenciesCodes = findById("USD").getExchangeRates().keySet().stream().collect(Collectors.toList());
-        currenciesCodes.add("USD");
+        if (!currenciesCodes.contains("USD"))
+            currenciesCodes.add("USD");
 
     }
 
@@ -31,7 +35,7 @@ public class ApiCurrencyRepository implements CurrencyRepository{
     public Currency findById(String id) {
         Currency currency = null;
         ObjectMapper mapper = new ObjectMapper();
-        String url = "https://freecurrencyapi.net/api/v2/latest?apikey=1f114580-730a-11ec-8ee4-437bd0793e7e&base_currency="+id;
+        String url = key1 + id;
 
         try {
             URL urlForGetRequest = new URL(url);
