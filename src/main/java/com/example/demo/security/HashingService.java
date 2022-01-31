@@ -11,7 +11,8 @@ public class HashingService {
         this.cost = 5;
     }
 
-    private String hash(String pass) {
+
+    public String hash(String pass) {
         return BCrypt.withDefaults().hashToString(cost, pass.toCharArray());
     }
 

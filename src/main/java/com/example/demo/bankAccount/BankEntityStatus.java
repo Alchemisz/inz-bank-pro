@@ -11,7 +11,9 @@ public enum BankEntityStatus {
 
     private String typeName;
 
-    BankEntityStatus(String typeName) {
+     BankEntityStatus(String typeName) {
         this.typeName = typeName;
     }
+
+
 }

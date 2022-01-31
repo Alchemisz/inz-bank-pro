@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @RunWith(SpringRunner.class)
+@TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BankAccountServiceTest {
 
@@ -19,7 +21,7 @@ public class BankAccountServiceTest {
     private BankAccountService bankAccountService;
     @Autowired
     private BankAccountRepository bankAccountRepository;
-
+    private BankAccount bankAccount;
     @Test
     public void accountNumberShouldExists(){
         //Given
@@ -39,5 +41,15 @@ public class BankAccountServiceTest {
         //then
         assertThat(unExistingAccountNUmber.length()).isEqualTo(26);
         assertThat(accountNumberExists).isFalse();
+    }
+    @Test
+    public void getBankAccountWorksCorrectly()
+    {
+        bankAccount = bankAccountService.getBankAccount("26922018960603293159613803");
+
+        assertThat(bankAccount.getAccountNumber().equals("26922018960603293159613803"));
+        assertThat(bankAccount.getBalance().equals(120));
+        assertThat(bankAccount.getCurrency().equals("PLN"));
+        assertThat(bankAccount.getClass().equals(BankAccount.class));
     }
 }

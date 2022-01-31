@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-@Repository
+
 public class InMemoryUserRepository implements UserRepository {
     private Map<String, User> users;
 

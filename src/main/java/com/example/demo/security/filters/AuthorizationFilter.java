@@ -1,6 +1,7 @@
 package com.example.demo.security.filters;
 
 import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,10 @@ import java.io.IOException;
 @Order(1)
 public class AuthorizationFilter implements Filter {
 
-    public AuthorizationFilter() {
+    private final UserRepository userRepository;
 
+    public AuthorizationFilter(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override

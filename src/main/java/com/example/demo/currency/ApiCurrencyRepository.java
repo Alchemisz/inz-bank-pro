@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
@@ -39,9 +41,17 @@ public class ApiCurrencyRepository implements CurrencyRepository{
             URL urlForGetRequest = new URL(url);
             currency = mapper.readValue(urlForGetRequest, Currency.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            Map<String, Double> exchangeRates = new HashMap<>();
+            exchangeRates.put("USD", 0.43);
+            exchangeRates.put("PLN", 0.43);
+            currency = new Currency("USD");
+            currency.setExchangeRates(exchangeRates);
+
+
+        } finally {
+            return currency;
         }
-        return currency;
+
     }
 
 }

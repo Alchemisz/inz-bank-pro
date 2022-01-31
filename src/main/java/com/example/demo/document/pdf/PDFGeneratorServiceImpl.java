@@ -1,4 +1,4 @@
-package com.example.demo.document.pef;
+package com.example.demo.document.pdf;
 
 import com.example.demo.transfers.Transfer;
 import com.lowagie.text.*;
@@ -14,6 +14,10 @@ public class PDFGeneratorServiceImpl implements PDFGeneratorService{
 
     @Override
     public void export(HttpServletResponse response, Transfer transfer) {
+        response.setContentType("application/pdf");
+        String headerKey = "Content-Disposition";
+        String headerValue = "inline; filename=transfer_" + transfer.getId() + "_" + transfer.getTransferDate() + ".pdf";
+        response.setHeader(headerKey, headerValue);
         Document document = new Document(PageSize.A4);
         try {
             PdfWriter.getInstance(document, response.getOutputStream());

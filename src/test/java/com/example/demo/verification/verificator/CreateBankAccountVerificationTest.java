@@ -3,6 +3,7 @@ package com.example.demo.verification.verificator;
 import com.example.demo.bankAccount.BankAccount;
 import com.example.demo.bankAccount.BankAccountService;
 import com.example.demo.request.CreateBankAccountRequest;
+import com.example.demo.request.CreateBankAccountRequestTest;
 import com.example.demo.security.priviledges.UserPriviledges;
 import com.example.demo.user.User;
 import com.example.demo.verification.VerificationService;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
+@TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CreateBankAccountVerificationTest {
     @Autowired
@@ -51,7 +54,7 @@ public class CreateBankAccountVerificationTest {
     }
 
     @Test
-    public void CreateBankAccountVerificatorTest() {
+    public void createBankAccountVerificatorTest() {
         VerificationStrategyFactory factoryMock = new VerificationStrategyFactory() {
 
             @Override

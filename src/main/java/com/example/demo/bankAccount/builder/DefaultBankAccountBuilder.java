@@ -6,6 +6,7 @@ import com.example.demo.bankAccount.accountNumberGenerator.Generator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 public class DefaultBankAccountBuilder implements BankAccountBuilder{
 
@@ -15,6 +16,7 @@ public class DefaultBankAccountBuilder implements BankAccountBuilder{
     public DefaultBankAccountBuilder(@Qualifier("accountNumberGenerator") Generator accountNumberGenerator) {
         this.accountNumberGenerator = accountNumberGenerator;
         this.bankAccount = new BankAccount();
+        this.bankAccount.setCardList(new ArrayList<>());
     }
 
     @Override
