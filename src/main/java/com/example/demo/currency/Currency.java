@@ -11,6 +11,7 @@ import java.util.Map;
 @Data
 public class Currency {
 
+    @JsonAlias("base_code") //dla key2
     private String currencyName;
 
 //    @JsonAlias("data") //Dla key1
@@ -20,18 +21,16 @@ public class Currency {
     public Currency() {
     }
 
+
     public Currency(String name) {
         this.currencyName = name;
     }
 
-    @JsonProperty("query")
-    private void unpackNested(Map<String, String> query){
-        this.currencyName = query.get("base_currency");
-    }
 //    @JsonProperty("query") //Dla key1
 //    private void unpackNested(Map<String, String> query){
 //        this.currencyName = query.get("base_currency");
 //    }
+
 
 }
 

@@ -153,6 +153,21 @@ public class SqlUserRepository implements UserRepository {
 
     @Override
     public List<User> getAll() {
-        return null;
+        List<User> users = new ArrayList<>();
+        try {
+
+            Connection conn = dataSource.getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT login FROM TUSER");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                users.add(getUser(resultSet.getString("login")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            return users;
+        }
+
     }
 }
