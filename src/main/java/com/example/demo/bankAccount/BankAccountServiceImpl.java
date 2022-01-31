@@ -53,8 +53,9 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public void blockAccount(String accountNumber) {
-        bankAccountRepository.getBankAccount(accountNumber).setStatus(BankEntityStatus.BLOCKED);
-        bankAccountRepository.update(bankAccountRepository.getBankAccount(accountNumber));
+        BankAccount bankAccount = bankAccountRepository.getBankAccount(accountNumber);
+        bankAccount.setStatus(BankEntityStatus.BLOCKED);
+        bankAccountRepository.update(bankAccount);
     }
 
     @Override
