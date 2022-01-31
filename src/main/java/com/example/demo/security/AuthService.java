@@ -34,11 +34,16 @@ public class AuthService {
         User user = userRepository.getUser(login);
         if(user != null) {
             String userHash = user.getPass();
-            if(hashingService.verify(userHash, pass)) {
-                LoginRequest loginRequest = new LoginRequest(httpSession, user);
-                AbstractVerificator loginVerificator = verificatorAbstractFactory.getLoginVerificator(VerificationType.EMAIL);
-                String id = loginVerificator.startVerification(loginRequest);
-                return id;
+            int a = 2;
+            try {
+                if(hashingService.verify(userHash, pass)) {
+                    LoginRequest loginRequest = new LoginRequest(httpSession, user);
+                    AbstractVerificator loginVerificator = verificatorAbstractFactory.getLoginVerificator(VerificationType.EMAIL);
+                    String id = loginVerificator.startVerification(loginRequest);
+                    return id;
+                }
+            } catch(NullPointerException e) {
+                return null;
             }
         }
         return null;
